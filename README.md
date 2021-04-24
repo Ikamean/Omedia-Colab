@@ -24,6 +24,7 @@
 - registration
 - login
 - auth
+- sessions
 - cookies
 - add more..
 
