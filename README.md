@@ -20,10 +20,12 @@
 
 
 
-### **Project Description**
--
--
--
+### **Project Required Steps**
+- registration
+- login
+- auth
+- cookies
+- add more..
 
 ### **Used Technologies**
 -
