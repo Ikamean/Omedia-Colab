@@ -20,13 +20,8 @@
 
 
 
-### **Project Required Steps**
-- registration
-- login
-- auth
-- sessions
-- cookies
-- add more..
+### **Project Overwiev*
+...
 
 ### **Used Technologies**
 -
