@@ -1,4 +1,5 @@
 <template>
+<!-- popup login -->
   <div class="text-center">
     <v-dialog
       v-model="dialog"
@@ -42,6 +43,7 @@
       
     </v-dialog>
   </div>
+<!-- popup login -->
 </template>
 
 <script>
