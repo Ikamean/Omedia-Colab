@@ -1,4 +1,4 @@
-const Users = require('../MongoDB/models/users');
+const Users = require('../../MongoDB/models/users');
 const { makeHash, compareHash } = require('./hashPassword');
 
 /* 

@@ -2,6 +2,6 @@ POST http://localhost:5000/api/register
 Content-Type: application/json
 
 {
-    "userName" : "valideUser",
-    "password" : "password"
+    "userName" : "valideUser12",
+    "password" : "1ssssssssssss"
 }
