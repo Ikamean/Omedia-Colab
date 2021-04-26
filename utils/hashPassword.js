@@ -10,7 +10,7 @@ const makeHash = async (password) => {
 /* 
     Comparing allready Saved hashes and  passwords During User Login.
 */
-const compareHash = async (hash, password) => {
+const compareHash = async (password, hash) => {
     return await bcrypt.compare(password, hash);
 }
 

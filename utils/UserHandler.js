@@ -1,15 +1,15 @@
 const Users = require('../MongoDB/models/users');
-const { makeHash } = require('./hashPassword');
+const { makeHash, compareHash } = require('./hashPassword');
 
 /* 
     Checks if username exists allready or not.
 
 */
-const findIfExists = async (name,res) => {
+const findIfExists = async (name) => {
 
     try {
 
-        return await Users.findOne({ userName : name}) ? true : false;
+        return await Users.findOne({ userName : name }) ? true : false;
 
     } catch (error) {
 
@@ -46,4 +46,26 @@ const addUser = async (name,pass) => {
     
 }
 
-module.exports = { findIfExists, addUser }
+
+/*
+    Find user with username during login and check password
+*/
+const validateUser = async (name, pass) =>{
+    try {
+        let user = await Users.findOne({ userName : name });
+        let passwordsMatch = await compareHash(pass, user.password);
+
+        if(user && passwordsMatch){
+            return true;
+        }
+        return false;
+
+    } catch (error) {
+
+        console.log(error);
+        return null;
+
+    }
+}
+
+module.exports = { findIfExists, addUser, validateUser }

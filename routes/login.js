@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', (req,res) => {
+const { validateUser } = require('../utils/UserHandler');
+
+router.post('/', async (req,res) => {
     const name = req.body.userName;
     const pass = req.body.password;
 
-    console.log(name,pass);
+    let validation = await validateUser(name,pass);
+    if(!validation){
+        res.status(403).send('Wrong Credentials');
+    }
+    res.send(name);
 })
 
 

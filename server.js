@@ -17,6 +17,7 @@ app.use(cookieParser());
 
 // Routes \\
 app.use('/api/register', Register);
+app.use('/api/login', Login);
 
 app.use(express.static(`${__dirname}/views`) );
 const PORT = process.env.PORT || 5000;

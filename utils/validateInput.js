@@ -9,7 +9,7 @@
         P.S could be more complicated, but at this stage thats enough..
 
     */
-const validatePassword = (pass,res) => {
+const validatePassword = (pass) => {
     
 
     const regex1 = /^\d+|^\s+/g;
