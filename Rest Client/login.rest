@@ -1,0 +1,12 @@
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+    "userName" : "valideUser1",
+    "password" : "password"
+}
+
+###
+
+GET http://localhost:5000
+
