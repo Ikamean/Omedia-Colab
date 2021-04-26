@@ -14,8 +14,8 @@ router.post('/', async (req,res) => {
     if(!validation){
         return res.status(403).send('Wrong Credentials');
     }
-
-    
+    req.session.userName = name;
+    console.log(req.session);
     res.send(name);
 })
 
