@@ -24,8 +24,8 @@ app.use('/api/register', Register);
 app.use('/api/login', Login);
 
 app.get('/', (req,res) => {
-    console.log(req.session);
-    res.send('hi');
+    console.log(req.session.id);
+    res.send(`hi ${req.session.userName}`);
 })
 
 app.use(express.static(`${__dirname}/views`) );
