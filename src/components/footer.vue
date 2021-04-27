@@ -1,5 +1,5 @@
 <template>
-<!-- footer -->
+<!-- footer bar -->
   <v-footer
     dark
     padless
@@ -31,7 +31,7 @@
       </v-card-text>
     </v-card>
   </v-footer>
-  <!-- search -->
+  <!-- search bar -->
 </template>
 
 <script>
