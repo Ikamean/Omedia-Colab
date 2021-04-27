@@ -1,6 +1,19 @@
 const Users = require('../../MongoDB/models/users');
 const { makeHash, compareHash } = require('./hashPassword');
 
+
+/*
+    Find and return User by username
+*/
+const getUser = async (name) => {
+    try {
+        return await Users.findOne({ userName : name });
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 /* 
     Checks if username exists allready or not.
 
@@ -9,7 +22,7 @@ const findIfExists = async (name) => {
 
     try {
 
-        return await Users.findOne({ userName : name }) ? true : false;
+        return await getUser(name) ? true : false;
 
     } catch (error) {
 
@@ -52,7 +65,7 @@ const addUser = async (name,pass) => {
 */
 const validateUser = async (name, pass) =>{
     try {
-        let user = await Users.findOne({ userName : name });
+        let user = await getUser(name);
         let passwordsMatch = await compareHash(pass, user.password);
 
         if(user && passwordsMatch){
@@ -68,4 +81,4 @@ const validateUser = async (name, pass) =>{
     }
 }
 
-module.exports = { findIfExists, addUser, validateUser }
+module.exports = { findIfExists, addUser, validateUser, getUser }

@@ -4,8 +4,9 @@ const mongoose = require('../connect');
 const videoSchema = new mongoose.Schema({
     author: String,
     url: String,
+    title: String,
     private: Boolean,
-    category: String
+    created: String
 })
 
 videoSchema.set('toJSON', {

@@ -27,11 +27,7 @@ router.post('/', async (req,res) => {
         // adding new user to the database and returning response.
         await addUser(name,pass);
 
-        return res.status(201)
-        .json({ 
-            success: "201 ok, Created",
-            username : name 
-        });
+        return res.sendStatus(201);
         
     } catch (error) {
         console.log(error);
