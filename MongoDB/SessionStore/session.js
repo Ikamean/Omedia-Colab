@@ -13,11 +13,10 @@ const {
 const IN_PROD = NODE_ENV === 'production';
 
 const sess = session({
-    
     name: 'sid',
     resave: false,
     secret: SESS_SECRET,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: store,
     cookie: { 
         maxAge: SESS_LIFETIME,

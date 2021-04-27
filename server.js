@@ -11,10 +11,12 @@ const Register = require('./routes/register');
 const Login = require('./routes/login');
 const Logout = require('./routes/logout');
 const User = require('./routes/user');
+const Media = require('./routes/media');
+const Upload = require('./routes/upload');
 
 // Middlewares \\
 const redirectLogin = require('./middlewares/redirectLogin');
-
+const redirectHome = require('./middlewares/redirectHome');
 
 
 app.use(express.json());
@@ -26,10 +28,12 @@ app.use(cookieParser());
 app.use(session);
 
 // Routes \\
-app.use('/api/register', Register );
-app.use('/api/login', Login );
+app.use('/api/register', redirectHome, Register );
+app.use('/api/login', redirectHome, Login );
 app.use('/api/logout',redirectLogin, Logout );
-app.use('/api/user/', redirectLogin, User );
+app.use('/api/user', redirectLogin, User );
+app.use('/api/media', Media );
+app.use('/api/upload', redirectLogin, Upload );
 
 app.get('/', (req,res) => {
     console.log(req.session.id);

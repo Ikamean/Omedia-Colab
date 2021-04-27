@@ -1,0 +1,5 @@
+GET http://localhost:5000/api/media
+
+
+###
+POST http://localhost:5000/api/upload

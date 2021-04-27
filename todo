@@ -1,6 +1,4 @@
-Session auth
+
 Cloudinary SDK
 
-Routes
-api/users:userName
-api/videos
+video Router
