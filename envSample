@@ -1,3 +1,13 @@
 PORT=
-MONGODB_URI=your mongoDB url
-MONGO_STORE_URI
+
+// Your MongoDB Config Variables //
+
+MONGODB_URI=
+MONGO_STORE_URI= 
+
+
+// Your  Cloudinary Config Variables //
+
+CLOUDINARY_NAME=
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
