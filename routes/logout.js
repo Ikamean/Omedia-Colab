@@ -8,6 +8,8 @@ router.post('/', async (req,res) => {
         Removes user Session in Store with given session id 
     */
 
+        console.log('Logging out from browser');
+
     const sid = req.session.id;
 
     await store.destroy(sid, err => {
@@ -17,7 +19,8 @@ router.post('/', async (req,res) => {
         }
     });
 
-    /**
+    
+    /*
         Removing Cookie in client browser. 
     */
     req.session.cookie.expires = new Date().getTime();

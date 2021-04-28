@@ -15,6 +15,7 @@ router.get('/me', async ( req, res ) => {
         res.json({
             userName: loggedUser.userName,
             userId : loggedUser.id,
+            email : loggedUser.email,
             videos: loggedUser.videos
         });
 

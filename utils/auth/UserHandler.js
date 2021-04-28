@@ -3,6 +3,7 @@ const { makeHash, compareHash } = require('./hashPassword');
 
 
 /*
+    Mini Helper Function for this file specifically.
     Find and return User by username
 */
 const getUser = async (name) => {
@@ -37,13 +38,14 @@ const findIfExists = async (name) => {
 /* 
         Handling new users data, saving them to the cloud.
 */
-const addUser = async (name,pass) => {    
+const addUser = async ( name,pass,email ) => {    
 
     try {
 
         const cloudUser = new Users({
             userName: name,
             password: await makeHash(pass),
+            email: email,
             videos: []
         });
 

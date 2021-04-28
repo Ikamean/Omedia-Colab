@@ -4,6 +4,7 @@ const mongoose = require('../connect');
 const userSchema = new mongoose.Schema({
     userName: String,
     password: String,
+    email: String,
     videos: Array
 })
 

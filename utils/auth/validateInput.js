@@ -1,6 +1,9 @@
+const User = require('../../MongoDB/models/users');
+
+
 /* 
 
-        Validation fails if : 
+        Password Validation fails if : 
 
         - Password starts with one or more number : ^\d+,
         - Password starts with one or more white space : ^\s+,
@@ -34,4 +37,16 @@ const parseUserName = (name) => {
     return name.replace(whiteSpace,'');
 }
 
-module.exports = { validatePassword, parseUserName }
+/*
+  Checking if inputed Email allready exists in database  
+*/
+
+const validateEmail = async (email) => {
+    const allEmails =  await User.find({},{ email : 1, _id : 0 });
+    
+    const emailAllreadyExists = allEmails.some( e => e.email === email );
+
+    return emailAllreadyExists;
+}
+
+module.exports = { validatePassword, parseUserName, validateEmail }

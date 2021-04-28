@@ -35,12 +35,9 @@ app.use('/api/user', redirectLogin, User );
 app.use('/api/media', Media );
 app.use('/api/upload', redirectLogin, Upload );
 
-app.get('/', (req,res) => {
-    console.log(req.session.id);
-    res.send(`hi ${JSON.stringify(req.session)}`);
-})
 
-app.use(express.static(`${__dirname}/views`) );
+
+app.use(express.static(`${__dirname}/views/dist`) );
 
 
 const PORT = process.env.PORT || 5000;

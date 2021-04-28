@@ -3,31 +3,42 @@ const router = express.Router();
 
 
 const { findIfExists, addUser } = require('../utils/auth/UserHandler');
-const { validatePassword, parseUserName } = require('../utils/auth/validateInput');
+const { validatePassword, parseUserName, validateEmail } = require('../utils/auth/validateInput');
 
 
 router.post('/', async (req,res) => {
     try {
+        /*
+            parseUserName parses any white space inside userName input field.
+        */
         const name = parseUserName(req.body.userName);
         const pass = req.body.password;
-        const exists = await findIfExists(name);
+        const email = req.body.email;
+
+
+        /*
+            Required Checker functions for user input to validate fields.
+        */
+        const exists = await findIfExists(name) || await validateEmail(email);
         const isValid = validatePassword(pass);
+       
 
 
         // Checking if userName allready exists
         if(exists){
-            return res.status(409).send(`Username ${name} allready taken`)
+            return res.status(409).send(`Username or Email allready taken`)
         }
 
-        // Check if password is valid
-        if(!isValid){
-            return res.send('Password must start with letter and must be min 8 characters long');
+       // adding new user to the database and returning response.
+        if(isValid){
+            await addUser(name,pass,email);
+
+            return res.sendStatus(201);
         }
 
-        // adding new user to the database and returning response.
-        await addUser(name,pass);
-
-        return res.sendStatus(201);
+         
+        
+        return res.send('Password must start with letter and must be min 8 characters long');
         
     } catch (error) {
         console.log(error);

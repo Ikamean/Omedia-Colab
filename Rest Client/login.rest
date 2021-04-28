@@ -2,11 +2,11 @@ POST http://localhost:5000/api/login
 Content-Type: application/json
 
 {
-    "userName" : "ika",
+    "userName" : "kiwo",
     "password" : "a12345678"
 }
 
-###
 
-GET http://localhost:5000
+
+
 
