@@ -24,7 +24,10 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 app.use(cookieParser());
-app.use(fileUpload());
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './routes/tmpFolder/'
+}));
 
 // Session \\
 app.use(session);
@@ -35,11 +38,11 @@ app.use('/api/login', redirectHome, Login );
 app.use('/api/logout',redirectLogin, Logout );
 app.use('/api/user', redirectLogin, User );
 app.use('/api/media', Media );
-app.use('/api/upload', Upload );
+app.use('/api/upload', redirectLogin, Upload ); // should add redirectLogin after testing
 
 
 
-app.use(express.static(`${__dirname}/views/dist`) );
+app.use(express.static(`${__dirname}/dist`) );
 
 
 const PORT = process.env.PORT || 5000;
