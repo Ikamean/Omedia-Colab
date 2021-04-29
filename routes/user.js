@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getUser } = require('../utils/commons/getUser');
+const { getUser } = require('../controllers/commons/getUser');
 
 /**
     Get Current loggeded user By ID;

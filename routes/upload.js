@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 
 const media = require('../MongoDB/models/media');
 
 const { cloudUploader } = require('../Cloudinary/cloudUtils/cloud');
 
-const { getUser } = require('../utils/commons/getUser');
+const { getUser } = require('../controllers/commons/getUser');
 
 
 router.post('/', async ( req, res ) => {
@@ -21,8 +22,14 @@ router.post('/', async ( req, res ) => {
         // uploads new file to cloudinary and responds with object
         const cloudinaryRes = await cloudUploader(fullPath);
 
-       // save file to mongoDB and update author videos array.
+
+        // save file to mongoDB and update author videos array.
         const uploadedFile = await saveNewMedia(title, private, author, cloudinaryRes);
+
+        // Removes Temporary file after uploading
+        if(cloudinaryRes){
+            removeTempFile(fullPath);
+        }
 
 
         res.json(uploadedFile); 
@@ -45,6 +52,18 @@ const convertPath = (path) => {
     const fullPath = __dirname + '/tmpFolder/' + fileName;
     
     return fullPath;
+}
+
+/**
+ * Removes Temporary File After uploading to cloudinary API
+ */
+const removeTempFile =  (path) => {
+    try {
+        fs.unlinkSync(path)
+        console.log('file removed');
+      } catch(err) {
+        console.error(err)
+      }
 }
 
 /**

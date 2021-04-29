@@ -38,3 +38,5 @@
                 mediaFile : Binary,
                 private : Boolean
             }
+            
+    - DELETE ->>> /api/media/delete/:id

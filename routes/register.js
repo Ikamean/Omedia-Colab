@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 
-const { findIfExists, addUser } = require('../utils/auth/UserHandler');
-const { validatePassword, parseUserName, validateEmail } = require('../utils/auth/validateInput');
+const { findIfExists, addUser } = require('../controllers/auth/UserHandler');
+const { validatePassword, parseUserName, validateEmail } = require('../controllers/auth/validateInput');
 
 
 router.post('/', async (req,res) => {

@@ -3,3 +3,7 @@ GET http://localhost:5000/api/media
 
 ###
 POST http://localhost:5000/api/upload
+
+
+###
+DELETE http://localhost:5000/api/media/delete/608a6f2360a3fa4a826ebc29

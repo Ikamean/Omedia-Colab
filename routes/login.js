@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { validateUser, getUser } = require('../utils/auth/UserHandler');
+const { validateUser, getUser } = require('../controllers/auth/UserHandler');
 
 router.post('/', async (req,res) => {
     const name = req.body.userName;
@@ -26,6 +26,7 @@ router.post('/', async (req,res) => {
         Save userId in the session store for future identity use..
     */
     req.session.userId = loggedUser.id;
+    req.session.userName = loggedUser.userName;
 
 
     let responseData = {
