@@ -57,12 +57,20 @@ const convertPath = (path) => {
 /**
  * Removes Temporary File After uploading to cloudinary API
  */
-const removeTempFile =  (path) => {
+const removeTempFile =  async (path) => {
     try {
-        fs.unlinkSync(path)
-        console.log('file removed');
+       await  fs.unlink(path, (err) => {
+            
+            if(err) 
+                console.log(err);
+                return 
+                
+        });
+
+        
       } catch(err) {
         console.error(err)
+        return err;
       }
 }
 
@@ -76,10 +84,10 @@ const removeTempFile =  (path) => {
  * saves uploaded media file to MongoDB.
  */
 const saveNewMedia = async ( title, private, author , cloudinaryRes ) => {
-
+    
     const newMedia = media({
         author: author.userName,
-        url: cloudinaryRes.url,
+        url: cloudinaryRes.secure_url,
         title: title,
         private: private,
         created: Date()

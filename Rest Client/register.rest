@@ -2,7 +2,7 @@ POST http://localhost:5000/api/register
 Content-Type: application/json
 
 {
-    "userName" : "kiwo",
+    "userName" : "ika",
     "password" : "a12345678",
-    "email" : "email6687@gmail.com"
+    "email" : "ikamean@gmail.com"
 }

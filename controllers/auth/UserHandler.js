@@ -68,7 +68,7 @@ const addUser = async ( name,pass,email ) => {
 const validateUser = async (name, pass) =>{
     try {
         let user = await getUser(name);
-        let passwordsMatch = await compareHash(pass, user.password);
+        let passwordsMatch = user && await compareHash(pass, user.password);
 
         if(user && passwordsMatch){
             return true;

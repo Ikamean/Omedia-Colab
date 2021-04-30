@@ -19,6 +19,9 @@ router.get('/', async (req,res) => {
     
 });
 
+/**
+    Handle Media delete request by Media Id parameter present in URL,   
+ */
 
 router.delete('/delete/:id', redirectLogin, async (req,res) => {
 

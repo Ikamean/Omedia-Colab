@@ -13,30 +13,49 @@ const getAllMedia = async () => {
     return publicMedia.filter( media => media.private !== true );
 }
 
+/**
+ * 
+ * @param {String} id 
+ * @returns Media by ID.
+ */
 const getMediaById = async (id) => {
     return await media.findOne({ _id : id });
 }
 
+
+/**
+ * 
+ * @param { String } mediaId 
+ * @param { String } userId 
+ * @returns Handles Delete Request, Returns Updated Media Array and Author.videos Array without specific media element
+ */
+
 const deleteMediaById = async (mediaId, userId) => {
     let author = await getUser(userId);
 
-    
 
-    const updatedVideos = removeMediaFromUserVideos(author.videos, mediaId);
+    const updatedVideos = updateAuthorVideos(author.videos, mediaId);
 
-    console.log('Updated User Videos Length', updatedVideos.length());
-    console.log('primal length of user Videos', author.videos.length());
     
-    //author.videos = updatedVideos;
+    author.videos = updatedVideos;
+
+   
     
     await author.save();
 
     return await media.findOneAndDelete({ _id : mediaId });
 }
 
-const removeMediaFromUserVideos = ( mediaArray, mediaId ) => {
-    console.log();
-    return mediaArray.filter( video => video._id !== mediaId );
+
+/**
+ * 
+ * @param { Array } userVideos 
+ * @param { String} mediaId 
+ * @returns find specific id and removes it from array, returns updated author videos array
+ */
+
+const updateAuthorVideos = ( userVideos, mediaId ) => {
+    return userVideos.filter( video => JSON.stringify(video._id) !== JSON.stringify(mediaId) );
 }
 
 
