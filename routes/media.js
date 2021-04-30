@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const redirectLogin = require('../middlewares/redirectLogin');
 
-const { getAllMedia, deleteMediaById, getMediaById } = require('../controllers/commons/mediaHandler');
+const { getAllMedia, deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
 
 router.get('/', async (req,res) => {
     try {
@@ -19,9 +19,11 @@ router.get('/', async (req,res) => {
     
 });
 
-/**
-    Handle Media delete request by Media Id parameter present in URL,   
- */
+
+
+    /*
+        Handle Media delete request by Media Id parameter present in URL,   
+    */
 
 router.delete('/delete/:id', redirectLogin, async (req,res) => {
 
@@ -48,6 +50,30 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
         res.send(error)
     }
     
+});
+
+
+    /*
+        Handle Put request, Author can send New Title for video
+     */
+router.put('/edit/:id', redirectLogin, async ( req, res ) => {
+    const newTitle = req.body.title;
+    const media = await getMediaById(req.params.id);
+    const userName = req.session.userName;
+    const userId = req.session.userId;
+
+
+    if(!media){
+        return res.status(404).send('Media Not Found');
+    }
+
+    if( media.author === userName ){
+        const updatedMedia = await editMediaTitle( media.id , userId, newTitle );
+
+        return res.json(updatedMedia);
+    }
+
+    res.sendStatus(403);
 })
 
 module.exports = router;

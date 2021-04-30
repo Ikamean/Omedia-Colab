@@ -40,3 +40,9 @@
             }
             
     - DELETE ->>> /api/media/delete/:id
+
+    - PUT ->>> /api/media/edit/:id
+           - BODY
+           {
+               title : "new title"
+           }

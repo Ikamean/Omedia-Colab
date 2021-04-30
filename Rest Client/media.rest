@@ -6,4 +6,12 @@ POST http://localhost:5000/api/upload
 
 
 ###
-DELETE http://localhost:5000/api/media/delete/608a721d62c5c44d3a8f117b
+DELETE http://localhost:5000/api/media/delete/608b7cae0eaa5b1bd792479e
+
+###
+PUT http://localhost:5000/api/media/edit/608b7cbb0eaa5b1bd792479f
+Content-Type: application/json
+
+{
+    "title" : "new Title333333333333333221"
+}
