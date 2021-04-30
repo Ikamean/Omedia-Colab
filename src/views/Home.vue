@@ -2,8 +2,8 @@
   <v-container>
       <v-row>
         <v-col
-          v-for="n in 24"
-          :key="n"
+          v-for="(video, index) in videos"
+          :key="index"
           cols="12"
           xl="4"
           lg="4"
@@ -16,11 +16,11 @@
           hover
           elevation="0"
           >
-            <v-img
-              height="250"
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            ></v-img>
-            <v-card-title>{{videos[0].name}}</v-card-title>
+            <video width="300" height="250" controls>
+              <source :src="video.url" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <v-card-title>{{video.title}}</v-card-title>
 
             <v-card-text>
               <v-row
@@ -28,14 +28,14 @@
                 class="mx-0"
               >
               </v-row>
-              <div>{{videos[0].owner}}</div>
+              <div>{{video.author}}</div>
               <v-row class="align-center">
                 <v-col cols="6">
-                  <div>Duration: {{videos[0].duration/60}} min</div>
+                  <div>Duration: min</div>
                   
                 </v-col>
                 <v-col cols="6">
-                  <div>{{videos[0].date}}</div>
+                  <div>{{video.created}}</div>
                 </v-col>
               </v-row>
               
@@ -50,7 +50,7 @@
 
 <script>
 // @ is an alias to /src
-
+import { getAPI } from '../axios-api.js'
 
 export default {
   name: 'Home',
@@ -68,6 +68,21 @@ export default {
       }
     ],
   }),
+  methods: {
+    getVideos(){
+      getAPI.get('api/media')
+      .then(response => {
+        this.videos = response.data.data
+        console.log(this.videos)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  created(){
+    this.getVideos()
+  }
 }
 </script>
 

@@ -35,9 +35,9 @@
           nav
           dense
         >
-          <v-list-item link>
+          <v-list-item link @click="home()">
             <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
+              <v-icon router>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
@@ -49,7 +49,7 @@
             <v-list-item-title>About</v-list-item-title>
           </v-list-item>
 
-          <v-list-item link>
+          <v-list-item link @click="uploadPage()">
             <v-list-item-icon>
               <v-icon>mdi-cloud-upload-outline</v-icon>
             </v-list-item-icon>
@@ -64,7 +64,8 @@
 
 <script>
 import Login from '../components/login.vue'
-
+import router from '../router/index'
+import Upload from '../components/upload.vue'
 
 export default {
     name: 'Header',
@@ -75,7 +76,15 @@ export default {
 
     data: () => ({
       drawer: false
-    })
+    }),
+    methods: {
+      uploadPage(){
+        router.push({ path: '/Upload', components: Upload }).catch(()=>{})
+      },
+      home(){
+        router.push({ path: '/' }).catch(()=>{})
+      },
+    }
 }
 
 </script>
