@@ -24,6 +24,7 @@
 ...
 
 ### **Used Technologies**
--
--
--
+- NodeJs/Express
+- MongoDB/mongoose
+- Cloudinary API for video uploading
+- VueJS
