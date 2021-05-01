@@ -8,7 +8,6 @@ router.post('/', async (req,res) => {
         Removes user Session in Store with given session id 
     */
 
-        console.log('Logging out from browser');
 
     const sid = req.session.id;
 

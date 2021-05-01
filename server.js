@@ -38,11 +38,11 @@ app.use('/api/login', redirectHome, Login );
 app.use('/api/logout',redirectLogin, Logout );
 app.use('/api/user', redirectLogin, User );
 app.use('/api/media', Media );
-app.use('/api/upload', redirectLogin, Upload ); // should add redirectLogin after testing
+app.use('/api/upload', redirectLogin, Upload ); 
 
 
 
-app.use(express.static(`${__dirname}/dist`) );
+//app.use(express.static(`${__dirname}/dist`) );
 
 
 const PORT = process.env.PORT || 5000;
