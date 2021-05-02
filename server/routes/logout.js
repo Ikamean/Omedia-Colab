@@ -11,6 +11,7 @@ router.post('/', async (req,res) => {
 
     const sid = req.session.id;
 
+
     await store.destroy(sid, err => {
         if(err){
             console.log(err);

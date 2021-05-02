@@ -35,14 +35,13 @@ app.use(session);
 // Routes \\
 app.use('/api/register', redirectHome, Register );
 app.use('/api/login', redirectHome, Login );
-app.use('/api/logout',redirectLogin, Logout );
+app.use('/api/logout', redirectLogin, Logout );
 app.use('/api/user', redirectLogin, User );
 app.use('/api/media', Media );
 app.use('/api/upload', redirectLogin, Upload ); 
 
 
-
-//app.use(express.static(`${__dirname}/dist`) );
+app.use(express.static(`${__dirname}/views`) );
 
 
 const PORT = process.env.PORT || 5000;

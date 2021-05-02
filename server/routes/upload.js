@@ -17,6 +17,14 @@ router.post('/', async ( req, res ) => {
         const private = req.body.private;
         const author = await getUser(req.session.userId);
 
+        
+        if(!req.files){
+            return res.json({
+                success: false,
+                msg: "File Type should be multipart-form-data"
+            });
+        }
+
         const fullPath = convertPath(req.files.mediaFile.tempFilePath);
 
         // uploads new file to cloudinary and responds with object
@@ -31,7 +39,7 @@ router.post('/', async ( req, res ) => {
             removeTempFile(fullPath);
         }
 
-
+        
         res.json(uploadedFile); 
 
     } catch (error) {
@@ -85,12 +93,15 @@ const removeTempFile =  async (path) => {
  */
 const saveNewMedia = async ( title, private, author , cloudinaryRes ) => {
     
+
+    const formatedDate = Date().split(' ').splice(0,5).join('-');
+
     const newMedia = media({
         author: author.userName,
         url: cloudinaryRes.secure_url,
         title: title,
         private: private,
-        created: Date()
+        created: formatedDate
     });
 
     // Updating Author Object Video array
