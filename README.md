@@ -67,6 +67,7 @@
             {
                 title : String,
                 mediaFile : Binary,
+                thumbnail: Binary,
                 private : Boolean
             }
             
