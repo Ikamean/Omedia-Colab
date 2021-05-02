@@ -42,7 +42,7 @@ app.use('/api/upload', redirectLogin, Upload );
 
 
 
-//app.use(express.static(`${__dirname}/dist`) );
+app.use(express.static(`${__dirname}/dist`) );
 
 
 const PORT = process.env.PORT || 5000;
