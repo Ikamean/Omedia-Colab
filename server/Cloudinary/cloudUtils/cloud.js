@@ -10,7 +10,7 @@ const cloudUploader = async  (media) => {
         
         
         return await cloudinary.uploader.upload( media, 
-        {  resource_type: "video",  folder: "/Colab" });
+        {  resource_type: "auto",  folder: "/Colab" });
         
         
 

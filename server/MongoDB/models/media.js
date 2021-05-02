@@ -4,6 +4,7 @@ const mongoose = require('../connect');
 const mediaSchema = new mongoose.Schema({
     author: String,
     url: String,
+    thumbnail: String,
     title: String,
     private: Boolean,
     created: String

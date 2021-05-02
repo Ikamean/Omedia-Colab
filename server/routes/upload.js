@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 
+
+
 const media = require('../MongoDB/models/media');
 
 const { cloudUploader } = require('../Cloudinary/cloudUtils/cloud');
@@ -25,18 +27,24 @@ router.post('/', async ( req, res ) => {
             });
         }
 
-        const fullPath = convertPath(req.files.mediaFile.tempFilePath);
+        const videoFullPath = convertPath(req.files.mediaFile.tempFilePath);
+        const thumbnailFullPath = convertPath(req.files.thumbnail.tempFilePath);
+
+        
 
         // uploads new file to cloudinary and responds with object
-        const cloudinaryRes = await cloudUploader(fullPath);
+        const videoResp = await cloudUploader(videoFullPath);
+        const thumbnailResp = await cloudUploader(thumbnailFullPath);
 
 
         // save file to mongoDB and update author videos array.
-        const uploadedFile = await saveNewMedia(title, private, author, cloudinaryRes);
+        const uploadedFile = await saveNewMedia(title, private, author, videoResp, thumbnailResp);
+
 
         // Removes Temporary file after uploading
-        if(cloudinaryRes){
-            removeTempFile(fullPath);
+        if(videoResp && thumbnailResp){
+            await removeTempFile(videoFullPath);
+            await removeTempFile(thumbnailFullPath);
         }
 
         
@@ -91,17 +99,16 @@ const removeTempFile =  async (path) => {
  * 
  * saves uploaded media file to MongoDB.
  */
-const saveNewMedia = async ( title, private, author , cloudinaryRes ) => {
+const saveNewMedia = async ( title, private, author , videoResp, thumbnailResp ) => {
     
-
-    const formatedDate = Date().split(' ').splice(0,5).join('-');
 
     const newMedia = media({
         author: author.userName,
-        url: cloudinaryRes.secure_url,
+        url: videoResp.secure_url,
+        thumbnail: thumbnailResp.secure_url,
         title: title,
         private: private,
-        created: formatedDate
+        created: formatedDate()
     });
 
     // Updating Author Object Video array
@@ -113,6 +120,10 @@ const saveNewMedia = async ( title, private, author , cloudinaryRes ) => {
     // responding with freshly created File
     return await newMedia.save();
 
+}
+
+const formatedDate = () => {
+    return Date().split(' ').splice(0,5).join('-');
 }
 
 module.exports = router;
