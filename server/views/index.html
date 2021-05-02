@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    Login
+    <form action="/api/login" method="post">
+        <input type="text" name="userName">
+
+        <input type="password" name="password">
+
+        <input type="submit">
+    </form>
+
+    Logout
+    <form action="/api/logout" method="post">
+        <input type="submit">
+    </form>
+
+    Register
+    <form action="/api/register" method="post">
+        <input type="text" name="userName">
+
+        <input type="email" name="email">
+
+        <input type="password" name="password">
+
+        <input type="submit">
+    </form>
+
+    Upload
+    <form action="/api/upload" method="post" enctype="multipart/form-data">
+        <input type="text" name="title">
+        <input type="text" name="private">
+        <input type="file" name="mediaFile">
+        <input type="submit">
+    </form>
+
+    
+</body>
+</html>
