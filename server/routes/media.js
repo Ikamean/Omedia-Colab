@@ -8,20 +8,41 @@ const { client } = require('../Redis/redisConfig');
 
 const { getAllMedia, deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
 
+    /**
+     Using Redis for Caching Media.
+     */
+
 router.get('/', async (req,res) => {
     try {
-        const data = await getAllMedia();
         
-        client.setex('media', 120, JSON.stringify(data), (err) => {
+        client.get('media', async ( err, data ) => {
             if(err) console.error(err);
+
+            if(data === null){
+                const media = await getAllMedia();
+               
+                client.setex('media', 120, JSON.stringify(media), (err) => {
+                    if(err) console.error(err);
+                    
+                });
+
+                return res.json({
+                    "cached" : false,
+                    "data" : media
+                });
+            }
+
+            
+            res.json({
+                "cached" : true,
+                "data" : JSON.parse(data)
+            });
         })
 
-        res.json({
-            "data" : data
-        })
         
     } catch (error) {
        console.log(error); 
+       res.send(500);
     }
     
 });

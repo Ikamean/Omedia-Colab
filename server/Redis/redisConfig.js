@@ -6,4 +6,6 @@ const  client    = redis.createClient({
     password  : process.env.REDIS_PASS,    // replace with your password
   });
 
+  client.on('error', (err) => console.log(err));
+
   module.exports = { client };
