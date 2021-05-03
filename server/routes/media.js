@@ -2,12 +2,19 @@ const express = require('express');
 const router = express.Router();
 const redirectLogin = require('../middlewares/redirectLogin');
 
+// Redis //
+
+const { client } = require('../Redis/redisConfig');
+
 const { getAllMedia, deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
 
 router.get('/', async (req,res) => {
     try {
         const data = await getAllMedia();
         
+        client.setex('media', 120, JSON.stringify(data), (err) => {
+            if(err) console.error(err);
+        })
 
         res.json({
             "data" : data

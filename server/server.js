@@ -7,6 +7,10 @@ const session = require('./MongoDB/SessionStore/session');
 
 const express = require('express');
 const app = express();
+const redis = require('redis');
+
+const endpoint = process.env.REDIS_ENDPOINT
+const client = redis.createClient(endpoint)
 
 const Register = require('./routes/register');
 const Login = require('./routes/login');
