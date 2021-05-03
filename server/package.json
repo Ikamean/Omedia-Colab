@@ -8,10 +8,6 @@
     "start": "node server.js",
     "heroku-postbuild": "npm install --prefix server "
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ikamean/Omedia-Colab.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
