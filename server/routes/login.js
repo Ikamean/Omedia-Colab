@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+const { setHeaders } = require('../middlewares/setHeaders');
+
 const { validateUser, getUser } = require('../controllers/auth/UserHandler');
 
-router.post('/', async (req,res) => {
+router.post('/', setHeaders, async (req,res) => {
     const name = req.body.userName;
     const pass = req.body.password;
 
