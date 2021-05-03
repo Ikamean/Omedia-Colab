@@ -7,10 +7,16 @@ try {
         password  : process.env.REDIS_PASS,    // replace with your password
       });
 
-      module.exports = { client };
+    client.on( 'error' , (err) => {
+        return console.log(err);
+    } );
+
+    
+    module.exports = { client };
 
 } catch (error) {
-    console.error(error)
+    console.error(error);
+    return null;
 }
 
 
