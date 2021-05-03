@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "heroku-postbuild": "npm install"
+    "heroku-postbuild": "--prefix server npm install"
   },
   "repository": {
     "type": "git",
