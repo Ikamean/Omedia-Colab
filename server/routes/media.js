@@ -4,7 +4,7 @@ const redirectLogin = require('../middlewares/redirectLogin');
 
 const { myEmitter } = require('../Event/emitter');
 
-const { cached } = require('../middlewares/cache');
+const { redisMiddleware } = require('../middlewares/redisMiddleware');
 const { updateCache } = require('../controllers/commons/cacheHandler');
 
 
@@ -15,13 +15,13 @@ const {  deleteMediaById, getMediaById, editMediaTitle } = require('../controlle
  Listening to Upload / Delete / Put requests and updating cache if they get executed.
 */
 myEmitter.on('updateCache', async (data) => {
-    updateCache(data);
+    await updateCache(data);
 });
 
 
-// Using cached middleware 
+// get all media for home page, using caching middleware.
 
-router.get('/', cached, (req,res) => {});
+router.get('/', redisMiddleware, (req,res) => {});
 
 
 
@@ -36,6 +36,7 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
         const userName = req.session.userName;
         const userId = req.session.userId;
 
+        
         
         if(!media){
             return res.send('No media by that ID');
