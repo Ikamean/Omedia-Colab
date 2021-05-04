@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 
-
+const { myEmitter } = require('../Event/emitter');
 
 const media = require('../MongoDB/models/media');
 
@@ -47,7 +47,8 @@ router.post('/', async ( req, res ) => {
             await removeTempFile(thumbnailFullPath);
         }
 
-        
+        myEmitter.emit('updateCache', 'new document has been added, create new cache.');
+
         res.json(uploadedFile); 
 
     } catch (error) {

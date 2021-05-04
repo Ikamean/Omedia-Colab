@@ -2,26 +2,41 @@ const express = require('express');
 const router = express.Router();
 const redirectLogin = require('../middlewares/redirectLogin');
 
+const { myEmitter } = require('../Event/emitter');
+
+
+
 // Redis //
 
 const { client } = require('../Redis/redisConfig');
 
 const { getAllMedia, deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
 
-    /**
-     Using Redis for Caching Media.
-     */
+    
+/**
+ Listening to Upload / Delete / Put requests and updating cache if they get executed.
+*/
+myEmitter.on('updateCache', async (data) => {
+        const media = await getAllMedia();
+               
+        client.set('media', JSON.stringify(media), (err) => {
+            if(err) console.error(err);
+            
+        });
+        console.log('Created new cache: ' + data, media.length);
+});
+
 
 router.get('/', async (req,res) => {
     try {
-        
+         
         client.get('media', async ( err, data ) => {
             if(err) console.error(err);
 
             if(data === null){
                 const media = await getAllMedia();
                
-                client.setex('media', 120, JSON.stringify(media), (err) => {
+                client.set('media', JSON.stringify(media), (err) => {
                     if(err) console.error(err);
                     
                 });
@@ -68,6 +83,8 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
         if( media.author === userName ){
             await deleteMediaById( req.params.id, userId );
 
+            myEmitter.emit('updateCache', 'document deleted, create new cache');
+
             return res.send('Deletion Success')
         }
         
@@ -97,6 +114,8 @@ router.put('/edit/:id', redirectLogin, async ( req, res ) => {
 
     if( media.author === userName ){
         const updatedMedia = await editMediaTitle( media.id , userId, newTitle );
+
+        myEmitter.emit('updateCache', 'document updated, create new cache');
 
         return res.json(updatedMedia);
     }
