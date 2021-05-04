@@ -21,7 +21,7 @@
               <!-- tabs -->
               <v-tabs
                 dark
-                background-color="#11583E"
+                background-color="#1F7087"
                 grow
                 flat
                 slider-color="#ED7B22"
@@ -57,16 +57,17 @@
                   <!-- error message -->
                      
                   <!-- login form -->
-                  <v-form @submit.prevent="login()" v-model="valid">
+                  <v-form @submit.prevent="login()" v-model="validLogin">
                     <v-container class="justify-center">
                       <v-row justify="center"
                         align="center" 
                         dense>
                         <v-col cols="12">
                           <v-text-field
-                            v-model="username"
+                            v-model="userName"
                             :rules="nameRules"
                             placeholder="Username"
+                            name='userName'
                             prepend-inner-icon="mdi-account"
                             outlined
                             clearable
@@ -77,6 +78,7 @@
                           <v-text-field
                             v-model="password"
                             :rules="passwordRules"
+                            name='password'
                             placeholder="Password"
                             prepend-inner-icon="mdi-lock"
                             outlined
@@ -91,33 +93,15 @@
 
                         <v-col cols="auto">
                           <v-btn
-                            color="#11583E"
+                            color="#1F7087"
                             outlined
                             block
-                            :disabled="!valid"
-                            @click="login()"
-                            
+                            :disabled="!validLogin"
+                            type='submit'
                           >
                             Login
                           </v-btn>
                         </v-col>
-
-                        <v-card-subtitle>
-                          or, sign in with
-                        </v-card-subtitle>
-
-                        <v-btn
-                          color="#ED7B22"
-                          dark
-                          elevation="0"
-                          outlined
-                          fab
-                        >
-                          <v-icon dark>
-                            mdi-google
-                          </v-icon>
-                        </v-btn>
-
                       </v-row>
                     </v-container>
                   </v-form>
@@ -129,18 +113,19 @@
                 <!-- registration tab -->
                   <v-tab-item>
                     <v-card-title class="justify-center text-h4">
-                      <v-icon x-large color="#11583E">mdi-account-circle-outline</v-icon>
+                      <v-icon x-large color="#1F7087">mdi-account-circle-outline</v-icon>
                       </v-card-title>
 
-                      <v-form @submit.prevent="register()" v-model="valid">
+                      <v-form @submit.prevent="register()" v-model="validRegister">
                         <v-container class="justify-center">
                           <v-row justify="center"
                           align="center" 
                           dense>
                             <v-col cols="12">
                               <v-text-field
-                              v-model="username"
+                              v-model="userNameRegister"
                               :rules="nameRules"
+                              name='userName'
                               placeholder="Username"
                               prepend-inner-icon="mdi-account"
                               outlined
@@ -152,6 +137,7 @@
                               <v-text-field
                               v-model="email"
                               :rules="emailRules"
+                              name='email'
                               placeholder="Email"
                               prepend-inner-icon="mdi-email"
                               outlined
@@ -161,10 +147,11 @@
                             </v-col>
                             <v-col cols="12">
                               <v-text-field
-                              v-model="password"
+                              v-model="passwordRegister"
                               :rules="passwordRules"
                               placeholder="Password"
                               prepend-inner-icon="mdi-lock"
+                              name='password'
                               outlined
                               clearable
                               required
@@ -177,29 +164,15 @@
 
                             <v-col cols="auto">
                               <v-btn
-                              :disabled="!valid"
+                              :disabled="!validRegister"
                               color="#11583E"
                               outlined
                               block
-                              @click="register()"
+                              type='submit'
                               >
                                 Sign up
                               </v-btn>
                             </v-col>
-                            <v-card-subtitle>
-                            or, sign in with
-                            </v-card-subtitle>
-                            <v-btn
-                                color="#ED7B22"
-                                dark
-                                elevation="0"
-                                outlined
-                                fab
-                            >
-                                <v-icon dark>
-                                mdi-google
-                                </v-icon>
-                            </v-btn>
                           </v-row>
                         </v-container>
                     </v-form>
@@ -227,22 +200,24 @@
                 {{activeUser}}
               </v-btn>
             </template>
-            <v-card width="200px">
-              <v-list>
-
-                <v-list-item link @click='logout()'>
-                  <v-btn 
-                  class="d-flex align-center"
-                  text
-                  >
-                    <v-icon>mdi-logout</v-icon>
-                  </v-btn>
-                  <v-list-item-title>
-                    Logout
-                  </v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-card>      
+            <v-form @submit.prevent="logout()">
+              <v-card width="200px">
+                <v-list>
+                  <v-list-item link>
+                    <v-btn 
+                    class="d-flex align-center"
+                    text
+                    type="submit"
+                    >
+                      <v-icon>mdi-logout</v-icon>
+                    </v-btn>
+                    <v-list-item-title>
+                      Logout
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-card>
+            </v-form>      
           </v-menu>
         </div>
       </template>
@@ -254,8 +229,7 @@
 </template>
 
 <script>
-import { getAPI } from '../axios-api.js'
-
+//import axios from 'axios'
 
 export default {
   components: {
@@ -263,14 +237,16 @@ export default {
   },
   data:() => ({
       activeUser: '',
-      valid: true,
+      validLogin: true,
+      validRegister: true,
       dialog: false,
       success: false,
-      username: '',
       email: '',
       password: '',
       error: '',
       userName: '',
+      passwordRegister: '',
+      userNameRegister: '',
       nameRules: [
         v => !!v || 'Name is required',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters',
@@ -285,59 +261,89 @@ export default {
   }),
 
   methods: {
+    //function to handle login
     login(){
-      getAPI.post('api/login', {
-        userName: this.username,
-        password: this.password
-      })
-      .then(response => {
-        this.success = response.data.success;
-        localStorage.setItem('userID', response.data.data.userId)
-        localStorage.setItem('userName', response.data.data.userName)
-        this.activeUser = localStorage.getItem('userName')
-        console.log(response.data)
-        if (localStorage.getItem('userID')){
-          this.dialog = !this.success;
-        }
-        this.username = '';
-        this.password = '';
-      })
-      .catch(err => {
-        this.success = false;
-        this.error = err.response.data;
-      })
+      var formdata = new FormData();
+      formdata.append("userName", this.userName);
+      formdata.append("password", this.password);
+
+      var requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow',
+        credentials: 'include',
+      };
+
+      fetch("http://127.0.0.1:5000/api/login", requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          this.success = data.success;
+          localStorage.setItem('userID', data.data.userId)
+          localStorage.setItem('userName', data.data.userName)
+          this.activeUser = localStorage.getItem('userName')
+          if (localStorage.getItem('userID')){
+            this.dialog = !this.success;
+          }
+          this.userName = '';
+          this.password = '';
+        }) 
+        .catch(error => {
+          console.log('error', error)
+          this.error = error.response.data;
+          this.success = false;
+        });
     },
     //function for registration handling
     register(){
-      getAPI.post('api/register', {
-        userName: this.username,
-        email: this.email,
-        password: this.password
-      })
-      .then(response => {
-        console.log(response)
-        this.success = true;
-        this.username = '';
-        this.password = '';
-        this.dialog = false;
-      })
-      .catch(err => {
-        this.success = false;
-        this.error = err.response.data;
-        console.log(this.error)
-      })
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({"userName":this.userNameRegister,"password":this.passwordRegister, "email":this.email});
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch("http://127.0.0.1:5000/api/register", requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          this.success = true;
+          this.usernNameRegister = '';
+          this.passwordRegister = '';
+          this.dialog = false;
+        })
+        .catch(err => {
+          this.success = false;
+          this.error = err.response.data;
+          console.log(this.error)
+        });
     },
     //logout function which removes userID and userName from local storage
     logout(){
-      getAPI.post('api/logout')
-      .then(response => {
-        console.log(response)
-        localStorage.removeItem('userID');
-        localStorage.removeItem('userName');
-      })
-      .catch(err => {
-        console.log(err.response.data)
-      }) 
+      var formdata = new FormData();
+
+      var requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow',
+        credentials: 'include',
+      };
+
+      fetch("http://127.0.0.1:5000/api/logout", requestOptions)
+        .then(response => {
+          console.log(response.text())
+          localStorage.removeItem('userName')
+          localStorage.removeItem('userId')
+          })
+        .then(result => {
+          console.log(result)
+          })
+        .catch(error => console.log('error', error)); 
     },
     //remove error message
     removeError(){
@@ -345,7 +351,7 @@ export default {
     }
   },
   mounted(){
-    if (localStorage.getItem('userID')){
+    if (localStorage.getItem('userName') & document.cookie){
           this.success = true;
     }
     this.activeUser = localStorage.getItem('userName')

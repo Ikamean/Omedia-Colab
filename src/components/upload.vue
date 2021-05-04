@@ -1,75 +1,221 @@
 <template>
     <div>
-      <v-container class="mt-4">
+      <v-container class="mt-4" fluid>
         <v-row justify="center">
-          <v-card width="80vw">
-          <v-form
-          ref="form"
-          lazy-validation
-          enctype="mutlipart/form-data"
-          @submit.prevent="upload()"
-          >
-          <v-container>
-            <v-row class="justify-center"
-            align="center" 
-            dense>
-              <v-col cols="12">
-                <v-text-field
-                v-model="uploadFile.title"
-                outlined
-                :rules="nameRules"
-                placeholder="Name"
-                required
-                ></v-text-field>
+        <!-- Upload form -->
+          <v-col cols='auto' no-gutters>
+            <v-card width="80vw">
+              <v-form
+              ref="form"
+              lazy-validation
+              enctype="mutlipart/form-data"
+              @submit.prevent="upload()"
+              >
+                <v-container fluid>
+                  <v-row class="justify-center"
+                  align="center" 
+                  dense
+                  no-gutters>
+                    <v-col cols="12">
+                      <v-text-field
+                      v-model="uploadFile.title"
+                      outlined
+                      clearable
+                      :rules="nameRules"
+                      placeholder="Name"
+                      name='title'
+                      required
+                      dense
+                      prepend-icon="mdi-subtitles"
+                      ></v-text-field>
+                    </v-col>
 
-                <div class="field">
-                  <label for="file" class="label">Upload video</label>
-                  <input 
-                    type="file"
-                    ref="file"
-                    @change="selectFile"
-                  />
-                </div>
+                    <v-col cols='12'>
+                      <v-file-input
+                        label="Video"
+                        outlined
+                        show-size
+                        dense
+                        ref="file"
+                        name='file'
+                        @change="Preview_image"
+                        v-model="uploadFile.mediaFile"
+                        accept="video/*"
+                        prepend-icon="mdi-video"
+                      ></v-file-input>
+                    </v-col>
 
-              </v-col>
+                    <v-col cols='12'>
+                      <v-file-input
+                        label="Thumbnail"
+                        outlined
+                        show-size
+                        dense
+                        ref="thumbnail"
+                        name="thumbnail"
+                        accept="image/*"
+                        prepend-icon="mdi-image"
+                        @change="Preview_image"
+                        v-model="uploadFile.thumbnail"
+                      ></v-file-input>
+                    </v-col>
 
-              <v-col cols="auto">
-                <v-btn
-                color="#11583E"
-                class="mr-4"
-                text
-                @click="upload()"
-                >
-                  <v-icon dark x-large>mdi-cloud-upload-outline</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
+                    <v-col cols="auto">
+                      <v-radio-group
+                        v-model="uploadFile.private"
+                        row
+                      >
+                        <v-radio
+                          label="Public"
+                          value='false'
+                          name='private'
+                        ></v-radio>
+                        <v-radio
+                          label="Private"
+                          value="true"
+                          name='private'
+                        ></v-radio>
+                      </v-radio-group>
+                    </v-col>
+
+                    <v-col cols="auto">
+                      <v-btn
+                      color="#11583E"
+                      text
+                      type="submit"
+                      >
+                        <v-icon dark x-large>mdi-cloud-upload-outline</v-icon>
+                      </v-btn>
+                    </v-col>
+
+                  </v-row>
+
+        <!-- Upload preview -->
+                  <v-card
+                    color="#1F7087"
+                    dark
+                    v-if="url && uploadFile.title"
+                  >
+                    <div class="d-flex flex-no-wrap justify-center">
+                      <div>
+                        <v-row justify="center">
+                          <v-col cols="auto">
+                            <v-card-title
+                            class="text-h5"
+                            
+                          >Upload preview
+                            </v-card-title>
+
+                            <v-card-subtitle>Created {{date}}</v-card-subtitle>
+                            <v-card-actions>
+
+                              <v-btn
+                                class="ml-2 mt-5"
+                                outlined
+                                rounded
+                                small
+                              >
+                                {{uploadFile.title}}
+                              </v-btn>
+
+                              <v-btn
+                                class="ml-2 mt-5"
+                                outlined
+                                rounded
+                                small
+                                v-if="uploadFile.private"
+                              >
+                                Private
+                              </v-btn>
+
+                              <v-btn
+                                class="ml-2 mt-5"
+                                outlined
+                                rounded
+                                small
+                                v-else
+                              >
+                                Public 
+                              </v-btn>
+                            </v-card-actions>
+                          </v-col>
+
+                          <v-col cols="auto">
+                            <v-avatar
+                              class="ma-3"
+                              size="225"
+                              tile
+                            >
+                              <v-img :src=url></v-img>
+                            </v-avatar>
+                          </v-col>
+
+                        </v-row>
+                      </div>
+                    </div>
+                  </v-card>
+        <!-- Upload preview -->   
+
+                </v-container>
+              </v-form>
+            </v-card>  
+          </v-col>
+        <!-- Upload form -->
+
+        <!-- My videos component -->
+          <v-col 
+          cols='12'
+          xl="2"
+          lg="2"
+          md="12"
+          sm="12"
+          xs="12">
+          <v-card width='100vw' class='ma-0' elevation="0">
+            <v-container fluid>
+              <v-row justify="center">
+                <v-col cols="12">
+                    <v-card dark color="#385F73">
+                      <v-card-title class="text-h5">
+                      My videos
+                      </v-card-title>
+                    </v-card>
+                </v-col>
+              </v-row>
             </v-container>
-          </v-form>
-          </v-card>  
-      </v-row>  
-      </v-container>            
+          </v-card>
+            
+            <MyVideos />
+          </v-col>
+        <!-- My videos component -->
+        </v-row>  
+      </v-container>     
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import MyVideos from '../components/myVideos.vue'
 
   export default {
     name: 'Upload',
+    components: {
+      MyVideos
+    },
 
     data: () => ({
       nameRules: [
         v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        v => (v && v.length <= 50) || 'Name must be less than 50 characters',
       ],
-      authenticated: false, 
+      authenticated: false,
+      showPreview: false, 
       error: '',
-      
+      url: null,
+      date: '',
       uploadFile: {
         title: '',
-        private: false,
+        private: '',
         mediaFile: null,
+        thumbnail: null,
       }
     }),
 
@@ -83,30 +229,41 @@ import axios from 'axios'
         }
       },
       upload(){
-        var data = new FormData();
-        data.append('title', this.uploadFile.title);
-        data.append('private', this.uploadFile.private);
-        data.append('mediaFile', this.uploadFile.mediaFile);
-        console.log(this.uploadFile.mediaFile)
 
-        var config = {
-          method: 'post',
-          url: 'http://127.0.0.1:5000/api/upload',
-          headers: { 
-          },
-          data : data
+        var formdata = new FormData();
+
+        if(this.uploadFile.private == 'true'){
+          this.uploadFile.private = true;
+        }else{
+          this.uploadFile.private = false;
+        }
+
+        formdata.append("title", this.uploadFile.title);
+        formdata.append("private", this.uploadFile.private);
+        formdata.append("mediaFile", this.$refs.file.files[0], "video");
+        formdata.append("thumbnail", this.$refs.thumbnail.files[0], "thumbnail");
+
+        var requestOptions = {
+          method: 'POST',
+          body: formdata,
+          redirect: 'follow',
+          credentials: 'include',
         };
 
-        axios(config)
-        .then(response => {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        fetch("http://127.0.0.1:5000/api/upload", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
       },
       selectFile(){
         this.uploadFile.mediaFile = this.$refs.file.files[0];
+        this.uploadFile.thumbnail = this.$refs.thumbnail.files[0];
+      },
+      Preview_image() {
+        this.url= URL.createObjectURL(this.uploadFile.thumbnail)
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed);
+        this.date = today.toLocaleDateString();
       }
     },
     mounted(){
@@ -116,55 +273,5 @@ import axios from 'axios'
 </script>
 
 <style scoped>
-/* Add basic styles for the upload container */
-.upload-container {
-	border-radius: 0.25rem;
-	border: 1px solid#486684;
-	display: block;
-	margin: auto;
-	width: 100%;
-}
-.upload-heading,
-.upload-footer {
-	background: #486684;
-	color: #fff;
-	padding: 1rem 2rem;
-	font-weight: 600;
-}
-.upload-body {
-	align-items: center;
-	background-color: #fafafa;
-	color: #486684;
-  display: flex;
-  font-size: 1.5rem;
-	justify-content: center;
-	min-height: 25vh;
-}
-.upload-footer {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-.upload-footer-file-name {
-	margin-bottom: 0.25rem;
-}
-.upload-footer-file-size {
-	opacity: 0.95;
-}
-.upload-footer-button {
-	background-color: transparent;
-	border: 2px solid #fff;
-	border-color: #fff;
-	border-radius: 0.25rem;
-	color: #fff;
-	cursor: pointer;
-	font-weight: 600;
-	padding: 0.5rem 1rem;
-	transition: 0.25s all;
-}
-.upload-footer-button:hover {
-	background-color: #fff;
-	color: #486684;
-	transition: 0.25s all;
-}
+
 </style>

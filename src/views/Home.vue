@@ -1,6 +1,6 @@
 <template>
   <v-container>
-      <v-row>
+      <v-row justify='center'>
         <v-col
           v-for="(video, index) in videos"
           :key="index"
@@ -15,6 +15,7 @@
           tile
           hover
           elevation="0"
+          class='ml-4'
           >
             <video width="300" height="250" controls>
               <source :src="video.url" type="video/mp4">
@@ -30,18 +31,12 @@
               </v-row>
               <div>{{video.author}}</div>
               <v-row class="align-center">
-                <v-col cols="6">
-                  <div>Duration: min</div>
-                  
-                </v-col>
-                <v-col cols="6">
+                <v-col cols="12">
                   <div>{{video.created}}</div>
                 </v-col>
               </v-row>
               
-              
-            </v-card-text>
-            
+            </v-card-text>  
           </v-card>
         </v-col>
       </v-row>

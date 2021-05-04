@@ -2,7 +2,7 @@
  <div>
    <!-- navigation bar -->
     <v-app-bar app 
-    color="#11583E" 
+    color="#1F7087" 
     dark 
     flat>
     <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -30,6 +30,7 @@
       v-model="drawer"
       fixed
       app
+      disable-resize-watcher
     >
       <v-list
           nav
@@ -40,13 +41,6 @@
               <v-icon router>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item link>
-            <v-list-item-icon>
-              <v-icon>mdi-progress-question</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>About</v-list-item-title>
           </v-list-item>
 
           <v-list-item link @click="uploadPage()">
@@ -84,6 +78,9 @@ export default {
       home(){
         router.push({ path: '/' }).catch(()=>{})
       },
+    },
+    mounted(){
+      
     }
 }
 
