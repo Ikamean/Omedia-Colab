@@ -23,7 +23,7 @@ myEmitter.on('updateCache', async (data) => {
             if(err) console.error(err);
             
         });
-        console.log('Created new cache: ' + data, media.length);
+        console.log('Created new cache : =>>>>> ' + data, media.length);
 });
 
 
