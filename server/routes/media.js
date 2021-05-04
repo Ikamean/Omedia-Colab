@@ -2,22 +2,26 @@ const express = require('express');
 const router = express.Router();
 const redirectLogin = require('../middlewares/redirectLogin');
 
-const { getAllMedia, deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
+const { myEmitter } = require('../Event/emitter');
 
-router.get('/', async (req,res) => {
-    try {
-        const data = await getAllMedia();
-        
+const { redisMiddleware } = require('../middlewares/redisMiddleware');
+const { updateCache } = require('../controllers/commons/cacheHandler');
 
-        res.json({
-            "data" : data
-        })
-        
-    } catch (error) {
-       console.log(error); 
-    }
+
+const {  deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
+
     
+/**
+ Listening to Upload / Delete / Put requests and updating cache if they get executed.
+*/
+myEmitter.on('updateCache', async (data) => {
+    await updateCache(data);
 });
+
+
+// get all media for home page, using caching middleware.
+
+router.get('/', redisMiddleware, (req,res) => {});
 
 
 
@@ -33,12 +37,15 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
         const userId = req.session.userId;
 
         
+        
         if(!media){
             return res.send('No media by that ID');
         }
 
         if( media.author === userName ){
             await deleteMediaById( req.params.id, userId );
+
+            myEmitter.emit('updateCache', 'document deleted, create new cache');
 
             return res.send('Deletion Success')
         }
@@ -69,6 +76,8 @@ router.put('/edit/:id', redirectLogin, async ( req, res ) => {
 
     if( media.author === userName ){
         const updatedMedia = await editMediaTitle( media.id , userId, newTitle );
+
+        myEmitter.emit('updateCache', 'document updated, create new cache');
 
         return res.json(updatedMedia);
     }
