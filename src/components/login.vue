@@ -37,7 +37,7 @@
                 <!-- login tab -->
                 <v-tab-item>
                   <v-card-title class="justify-center text-h4">
-                    <v-icon x-large color="#11583E">mdi-account-circle-outline</v-icon>
+                    <v-icon x-large color="#1F7087">mdi-account-circle-outline</v-icon>
                   </v-card-title>
 
                   <!-- error message -->
@@ -355,6 +355,6 @@ export default {
           this.success = true;
     }
     this.activeUser = localStorage.getItem('userName')
-}
+  }
 }
 </script>

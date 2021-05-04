@@ -98,15 +98,19 @@
                   >
                     <div class="d-flex flex-no-wrap justify-center">
                       <div>
-                        <v-row justify="center">
+                        <v-container fluid>
+                          <v-row justify="center">
                           <v-col cols="auto">
                             <v-card-title
                             class="text-h5"
-                            
-                          >Upload preview
+                            >
+                            Upload preview
                             </v-card-title>
 
                             <v-card-subtitle>Created {{date}}</v-card-subtitle>
+                          </v-col>
+
+                          <v-col>
                             <v-card-actions>
 
                               <v-btn
@@ -117,7 +121,11 @@
                               >
                                 {{uploadFile.title}}
                               </v-btn>
+                            </v-card-actions>
+                          </v-col>
 
+                          <v-col>
+                            <v-card-actions>
                               <v-btn
                                 class="ml-2 mt-5"
                                 outlined
@@ -139,7 +147,7 @@
                               </v-btn>
                             </v-card-actions>
                           </v-col>
-
+                          
                           <v-col cols="auto">
                             <v-avatar
                               class="ma-3"
@@ -150,7 +158,8 @@
                             </v-avatar>
                           </v-col>
 
-                        </v-row>
+                          </v-row>
+                        </v-container>
                       </div>
                     </div>
                   </v-card>
