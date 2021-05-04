@@ -45,13 +45,12 @@ app.use('/api/media', Media );
 app.use('/api/upload', redirectLogin, Upload ); 
 
 
-<<<<<<< HEAD
 
 app.use(express.static(`${__dirname}/dist`) );
-=======
-app.use(express.static(`${__dirname}/views`) );
->>>>>>> mongoSession
 
+app.get('/ping', (req,res) => {
+    res.send(`<h1>Pong is running on port ${PORT}</h1>`);
+})
 
 const PORT = process.env.PORT || 5000;
 
