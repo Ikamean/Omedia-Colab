@@ -4,63 +4,24 @@ const redirectLogin = require('../middlewares/redirectLogin');
 
 const { myEmitter } = require('../Event/emitter');
 
+const { cached } = require('../middlewares/cache');
+const { updateCache } = require('../controllers/commons/cacheHandler');
 
 
-// Redis //
-
-const { client } = require('../Redis/redisConfig');
-
-const { getAllMedia, deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
+const {  deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
 
     
 /**
  Listening to Upload / Delete / Put requests and updating cache if they get executed.
 */
 myEmitter.on('updateCache', async (data) => {
-        const media = await getAllMedia();
-               
-        client.set('media', JSON.stringify(media), (err) => {
-            if(err) console.error(err);
-            
-        });
-        console.log('Created new cache : =>>>>> ' + data, media.length);
+    updateCache(data);
 });
 
 
-router.get('/', async (req,res) => {
-    try {
-         
-        client.get('media', async ( err, data ) => {
-            if(err) console.error(err);
+// Using cached middleware 
 
-            if(data === null){
-                const media = await getAllMedia();
-               
-                client.set('media', JSON.stringify(media), (err) => {
-                    if(err) console.error(err);
-                    
-                });
-
-                return res.json({
-                    "cached" : false,
-                    "data" : media
-                });
-            }
-
-            
-            res.json({
-                "cached" : true,
-                "data" : JSON.parse(data)
-            });
-        })
-
-        
-    } catch (error) {
-       console.log(error); 
-       res.send(500);
-    }
-    
-});
+router.get('/', cached, (req,res) => {});
 
 
 
