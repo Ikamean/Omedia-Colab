@@ -30,7 +30,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(fileUpload({
     useTempFiles : true,
-    tempFileDir : './routes/tmpFolder/'
+    tempFileDir : './controllers/commons/tmpFolder'
 }));
 
 // Session \\
@@ -45,8 +45,10 @@ app.use('/api/media', Media );
 app.use('/api/upload', redirectLogin, Upload ); 
 
 
-
 app.use(express.static(`${__dirname}/dist`) );
+app.get('*', (req,res) => {
+    res.sendFile(`${__dirname}/dist/index.html`);
+})
 
 app.get('/ping', (req,res) => {
     res.send(`<h1>Pong is running on port ${PORT}</h1>`);

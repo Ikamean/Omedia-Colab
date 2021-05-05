@@ -1,5 +1,5 @@
 const { client } = require('../Redis/redisConfig');
-const { updateCache } = require('../controllers/commons/cacheHandler');
+const { updateCache } = require('../controllers/commons/updateCache');
 
     /**
      * 

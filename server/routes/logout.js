@@ -12,12 +12,14 @@ router.post('/', async (req,res) => {
     const sid = req.session.id;
 
 
+
     await store.destroy(sid, err => {
         if(err){
             console.log(err);
             return null;
         }
     });
+
 
     
     /*
@@ -27,7 +29,9 @@ router.post('/', async (req,res) => {
     let cookieKey = req.headers.cookie.split('=')[0];
     res.clearCookie(cookieKey);
 
-    res.send(`user  loggged out`)
+    console.log(`LOGOUT : =>>>>> user Logged Out`);
+
+    res.sendStatus(200);
 })
 
 module.exports = router;
