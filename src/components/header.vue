@@ -50,7 +50,7 @@
             <v-list-item-title>Upload video</v-list-item-title>
           </v-list-item>
 
-        </v-list>
+      </v-list>
     </v-navigation-drawer>
   <!-- navigation menu -->
  </div>

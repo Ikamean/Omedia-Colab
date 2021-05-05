@@ -1,29 +1,50 @@
 <template>
-    <v-card width='100vw' class='ma-0 flex'  height="70vh">
+    <v-card width='100vw' class='ma-0 flex' height="50vh">
         <v-container fluid>
             <v-row justify="center">
-                <v-col cols="12" v-for="i in 6"
-                    :key="i">
+                <v-col cols="auto" v-for="(video, index) in videos"
+                    :key="index">
                     <v-card
                     color="#385F73"
                     dark
+                    v-if='videos'
                     >
                         <v-img
-                        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                        height="100%"
-                        width="100%"
+                        :src="video.thumbnail"
+                        width="300" height="200"
                         ></v-img>
 
-                        <v-card-subtitle>test video.</v-card-subtitle>
+                        <div v-if="video.private == true">
+                            <v-card-subtitle>{{video.title}}: Private</v-card-subtitle>
+                        </div>    
+                        <div v-else>
+                            <v-card-subtitle>{{video.title}}: Public</v-card-subtitle>
+                        </div>
 
                         <v-card-actions>
-                            <v-btn text @click="editVid()">
-                            <Edit />
+                            <v-btn
+                            text
+                            dark
+                            @click="editPage(video._id)"
+                            >
+                            edit
                             </v-btn>
-                            <v-btn text @click="deleteVid()">
-                            <Delete />
+
+                            <v-btn
+                            text
+                            dark
+                            @click="deletePage(video._id)"
+                            >
+                            delete
                             </v-btn>
                         </v-card-actions>
+                    </v-card>
+                    <v-card
+                    color="#385F73"
+                    dark
+                    v-else
+                    >
+                        <v-card-title>You don't have videos</v-card-title>
                     </v-card>
                 </v-col>
             </v-row>
@@ -32,26 +53,48 @@
 </template>
 
 <script>
-import Delete from '../components/delete.vue';
+import router from '../router/index'
 import Edit from '../components/edit.vue'
+import Delete from '../components/delete.vue'
 
 export default {
     name: 'MyVideos',
     components: {
-        Delete,
-        Edit
+
     },
+
     data: ()=>({
-        
+        videos:  [],
     }),
     methods: {
-        editVid(){
+        //returns my videos
+        myVideos(){
 
+            var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            credentials: 'include',
+            };
+
+            fetch("/api/user/me", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                this.videos = result.videos
+                console.log(this.videos)
+            })
+            .catch(error => console.log('error', error));
         },
 
-        deleteVid(){
+        editPage(id){
+            router.push({ path: `/edit/${id}`, components: Edit }).catch(()=>{})
+        },
 
-        }
+        deletePage(id){
+            router.push({ path: `/delete/${id}`, components: Delete }).catch(()=>{})
+        },
+    },
+    mounted(){
+        this.myVideos()
     }
 }
 </script>

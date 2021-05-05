@@ -28,14 +28,14 @@
           <v-btn
             color="error"
             text
-            @click="dialogDelete = false"
+            @click="deleteVid()"
           >
             Yes
           </v-btn>
           <v-btn
             color="primary"
             text
-            @click="dialogDelete = false"
+            @click="uploadPage()"
           >
             No
           </v-btn>
@@ -46,17 +46,30 @@
 </template>
 
 <script>
+import router from '../router/index'
+import Upload from '../components/upload.vue'
+
   export default {
     name: 'Delete',
     data () {
       return {
-        dialogDelete: false,
+        dialogDelete: true,
       }
     },
     methods: {
         deleteVid(){
+        var requestOptions = {
+          method: 'DELETE',
+          redirect: 'follow',
+          credentials: 'include',
+        };
 
-        }
+        fetch(`/api/media/delete/${this.$route.params.id}`, requestOptions)
+        this.uploadPage()
+      },
+      uploadPage(){
+        router.push({ path: '/Upload', components: Upload }).catch(()=>{})
+      },
     }
   }
 </script>
