@@ -36,7 +36,7 @@ router.post('/', async (req,res) => {
 
             console.log(`Register : =>>>>>>>> ${name} Has Been Registered Successfully`);
 
-            return res.status(201).json({
+            return res.json({
                 success : true
             });
         }
