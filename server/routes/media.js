@@ -5,7 +5,7 @@ const redirectLogin = require('../middlewares/redirectLogin');
 const { myEmitter } = require('../Event/emitter');
 
 const { redisMiddleware } = require('../middlewares/redisMiddleware');
-const { updateCache } = require('../controllers/commons/cacheHandler');
+const { updateCache } = require('../controllers/commons/updateCache');
 
 
 const {  deleteMediaById, getMediaById, updateMedia } = require('../controllers/commons/mediaHandler');

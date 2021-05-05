@@ -9,10 +9,20 @@ const { getUser } = require('./getUser');
      * @returns gets and filters videos, returns only public videos back.
      */
 const getAllMedia = async () => {
-    let publicMedia = await media.find({});
+
+    try {
+
+    let publicMedia = await media.find({}).sort( { created : -1 });;
+
 
     
     return publicMedia.filter( media => media.private !== true );
+
+    } catch (error) {
+       console.log(error);
+       return  
+    }
+    
 }
 
     /**
@@ -155,7 +165,7 @@ const removeTempFile =  async (path) => {
                 console.log(err);
                 return 
             }
-            
+
             console.log('Temporary File has been Removed');
         });
 
