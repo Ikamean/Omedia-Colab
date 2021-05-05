@@ -8,8 +8,12 @@ const { redisMiddleware } = require('../middlewares/redisMiddleware');
 const { updateCache } = require('../controllers/commons/cacheHandler');
 
 
-const {  deleteMediaById, getMediaById, editMediaTitle } = require('../controllers/commons/mediaHandler');
+const {  deleteMediaById, getMediaById, updateMedia } = require('../controllers/commons/mediaHandler');
 
+// handling Put request
+
+const { convertPath } = require('../controllers/commons/mediaHandler');
+const { cloudUploader } = require('../Cloudinary/cloudUtils/cloud');
     
 /**
  Listening to Upload / Delete / Put requests and updating cache if they get executed.
@@ -64,18 +68,34 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
         Handle Put request, Author can send New Title for video
      */
 router.put('/edit/:id', redirectLogin, async ( req, res ) => {
+
     const newTitle = req.body.title;
+    const private = req.body.private;
+    let newThumbnail = '';
+
     const media = await getMediaById(req.params.id);
     const userName = req.session.userName;
     const userId = req.session.userId;
 
+    
+    // If request has new thumbnail update it.
+    if( req.files ) {
+        const thumbnailFullPath = convertPath(req.files.thumbnail.tempFilePath);
+        const thumbnailResp = await cloudUploader(thumbnailFullPath);
+
+        newThumbnail = thumbnailResp.secure_url;
+    }
+    // If no new thumbnails present, get old thumbnail url from request body object.
+    if ( !req.files ) {
+        newThumbnail = req.body.thumbnail;
+    }
 
     if(!media){
         return res.status(404).send('Media Not Found');
     }
 
     if( media.author === userName ){
-        const updatedMedia = await editMediaTitle( media.id , userId, newTitle );
+        const updatedMedia = await updateMedia( media.id , userId, newTitle, newThumbnail, private );
 
         myEmitter.emit('updateCache', 'document updated, create new cache');
 

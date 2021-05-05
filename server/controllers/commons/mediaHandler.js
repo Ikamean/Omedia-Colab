@@ -1,5 +1,7 @@
 const media = require('../../MongoDB/models/media');
 
+const fs = require('fs');
+
 const { getUser } = require('./getUser');
 
     /**
@@ -65,13 +67,52 @@ const updateAuthorVideos = ( userVideos, mediaId ) => {
      * @returns Updated Media with new title ..
      */
 
-const editMediaTitle = async ( mediaId, userId, newTitle ) => {
+    const paramExists = (param) => {
+        return param !== null;
+    }
+
+const updateMedia = async ( mediaId, userId, newTitle, newThumbnail, private ) => {
     const author = await getUser(userId);
 
-    const updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { title : newTitle } }, { returnOriginal: false } );
+    const hasTitle = paramExists(newTitle);
+    const hasThumbnail = paramExists(newThumbnail);
+    const hasPrivate = paramExists(private);
+
+    let updatedMedia = '';
+
+    // If 3 params are present update all of them
+
+    if( hasTitle && hasThumbnail && hasPrivate ){
+        updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { title : newTitle, thumbnail : newThumbnail, private : private } }, { returnOriginal: false } );
+    }
+
+    /*
+    // If 2 Params are present update 2 of them
+
+     //  Title and Thumbnail
+
+    if ( hasTitle && hasThumbnail && !hasPrivate ) {
+        updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { title : newTitle, thumbnail : newThumbnail } }, { returnOriginal: false } );
+    }
+    
+     // Title and Private
+
+    if ( hasTitle && !hasThumbnail && hasPrivate ) {
+        updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { title : newTitle,  private : private } }, { returnOriginal: false } );
+    }
+
+     // Thumbnail and Private 
+
+    if ( !hasTitle && hasThumbnail && hasPrivate ) {
+        updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { thumbnail : newThumbnail, private : private } }, { returnOriginal: false } );
+    }
+
+    //  if 1 Param is present update only 1
+
+    * */
     
 
-    await editAuthorVideoTitle( author, updatedMedia );   
+    await editAuthorVideo( author, updatedMedia );   
     
     return updatedMedia
 }
@@ -82,7 +123,7 @@ const editMediaTitle = async ( mediaId, userId, newTitle ) => {
      * @param {Object} updatedMedia 
      * @returns updates author videos array
      */
-const editAuthorVideoTitle = async ( author, updatedMedia ) => {
+const editAuthorVideo = async ( author, updatedMedia ) => {
      const authorUpdatedVideos = author.videos.map( video => JSON.stringify(video._id) === JSON.stringify(updatedMedia._id) ? updatedMedia : video );
 
      author.videos = authorUpdatedVideos;
@@ -91,5 +132,38 @@ const editAuthorVideoTitle = async ( author, updatedMedia ) => {
 
 }
 
+// Convert file path for cloudinary API
 
-module.exports = { getAllMedia, deleteMediaById, getMediaById, editMediaTitle }
+const convertPath = (path) => {
+    
+    const fileName = path.split('/')[3];
+
+    const fullPath = __dirname + '/tmpFolder/' + fileName;
+    
+    return fullPath;
+}
+
+/**
+ * Removes Temporary File After uploading to cloudinary API
+ */
+
+const removeTempFile =  async (path) => {
+    try {
+       await  fs.unlink(path, (err) => {
+            
+            if(err){
+                console.log(err);
+                return 
+            }
+            
+            console.log('Temporary File has been Removed');
+        });
+
+        
+      } catch(err) {
+        console.error(err)
+        return err;
+      }
+}
+
+module.exports = { getAllMedia, deleteMediaById, getMediaById, updateMedia, convertPath, removeTempFile }

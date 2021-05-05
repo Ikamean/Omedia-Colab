@@ -30,7 +30,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(fileUpload({
     useTempFiles : true,
-    tempFileDir : './routes/tmpFolder/'
+    tempFileDir : './controllers/commons/tmpFolder'
 }));
 
 // Session \\

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
+
 
 const { myEmitter } = require('../Event/emitter');
 
@@ -9,6 +9,7 @@ const media = require('../MongoDB/models/media');
 const { cloudUploader } = require('../Cloudinary/cloudUtils/cloud');
 
 const { getUser } = require('../controllers/commons/getUser');
+const { convertPath, removeTempFile } = require('../controllers/commons/mediaHandler');
 
 
 router.post('/', async ( req, res ) => {
@@ -64,34 +65,8 @@ router.post('/', async ( req, res ) => {
  * @returns get full path for cloudinary api
  */
 
-const convertPath = (path) => {
-    
-    const fileName = path.split('/')[2];
 
-    const fullPath = __dirname + '/tmpFolder/' + fileName;
-    
-    return fullPath;
-}
 
-/**
- * Removes Temporary File After uploading to cloudinary API
- */
-const removeTempFile =  async (path) => {
-    try {
-       await  fs.unlink(path, (err) => {
-            
-            if(err) 
-                console.log(err);
-                return 
-                
-        });
-
-        
-      } catch(err) {
-        console.error(err)
-        return err;
-      }
-}
 
 /**
  * 
@@ -129,4 +104,4 @@ const formatedDate = () => {
     return Date().split(' ').splice(0,5).join('-');
 }
 
-module.exports = router;
+module.exports =  router ;
