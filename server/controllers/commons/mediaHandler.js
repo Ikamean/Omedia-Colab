@@ -12,7 +12,7 @@ const getAllMedia = async () => {
 
     try {
 
-    let publicMedia = await media.find({}).sort( { created : -1 });;
+    let publicMedia = await media.find({}).sort( { created : -1 });
 
 
     
