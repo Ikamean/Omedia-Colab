@@ -27,7 +27,9 @@ router.post('/', async (req,res) => {
     let cookieKey = req.headers.cookie.split('=')[0];
     res.clearCookie(cookieKey);
 
-    res.send(`user  loggged out`)
+    console.log(`LOGOUT : =>>>>> user Logged Out`);
+
+    res.send(200);
 })
 
 module.exports = router;

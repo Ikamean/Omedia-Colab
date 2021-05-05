@@ -41,6 +41,8 @@ router.post('/', setHeaders, async (req,res) => {
         }
     }
 
+    console.log(`LOGIN =>>>> : User ${loggedUser.userName} has Logged In`);
+
     res.status(200).json(responseData);
 })
 

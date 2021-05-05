@@ -45,7 +45,6 @@ app.use('/api/media', Media );
 app.use('/api/upload', redirectLogin, Upload ); 
 
 
-
 app.use(express.static(`${__dirname}/dist`) );
 app.get('*', (req,res) => {
     res.sendFile(`${__dirname}/dist/index.html`);

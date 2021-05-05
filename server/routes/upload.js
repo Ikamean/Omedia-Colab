@@ -49,6 +49,8 @@ router.post('/', async ( req, res ) => {
 
         myEmitter.emit('updateCache', 'new document has been added, create new cache.');
 
+        console.log('Upload : =>>>>>>>>>> Files Has been Uploaded');
+
         res.json(uploadedFile); 
 
     } catch (error) {

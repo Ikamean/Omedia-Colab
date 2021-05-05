@@ -39,7 +39,7 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
         
         
         if(!media){
-            return res.send('No media by that ID');
+            return res.send(404);
         }
 
         if( media.author === userName ){
@@ -47,7 +47,7 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
 
             myEmitter.emit('updateCache', 'document deleted, create new cache');
 
-            return res.send('Deletion Success')
+            return res.send(200)
         }
         
         res.status(403).send('Oopss, Cant Proceed Request. In order to delete media, you should be author of it.')
