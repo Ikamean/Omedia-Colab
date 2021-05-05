@@ -1,33 +1,56 @@
 # Omedia-Colab 
 
 ### **Project Contributors** :rocket:
-- Akaki Ivanishvili
-- Irakli Bidzishvili
-
+    - Akaki Ivanishvili
+    - Irakli Bidzishvili
 
 
 ### To start working 
-- Fork this Repo ```git clone https://github.com/Ikamean/Omedia-Colab.git```
-- Go into Project folder ```cd Omedia-colab```
-- **Optional : You can Rename folder for further easy access in your machine ``` mv Omedia-Colab <some simple name> ```**  
-- Create new branch ```git checkout -b <Your Branch Name>```
-- Make some changes
-- Add changes to your new branch ``` git add . ```
-- Commit changes ``` git commit -m 'usefull message' ```
-- Push your local branch to remote repo ``` git push origin <Your Branch Name> ```
-- Create Pull Request
+    - Fork this Repo 
+        git clone https://github.com/Ikamean/Omedia-Colab.git
+
+    - Go into Project folder 
+        cd Omedia-colab
+
+    - Optional : You can Rename folder for further easy access  
+        mv Omedia-Colab <some simple name> 
+
+    - Create new branch 
+        git checkout -b <Your Branch Name>
+
+    - Make some changes
+
+    - Add changes to your new branch  
+        git add . 
+
+    - Commit changes  
+        git commit -m 'usefull message' 
+
+    - Push your local branch to remote repo 
+        git push origin <Your Branch Name> 
+
+    
 
 
 
 
 ### **Project Overwiev**
-...
+    test
 
-### **Used Technologies**
-- NodeJs/Express
-- MongoDB/mongoose
-- Cloudinary API for video uploading
-- VueJS
+
+### **Used Technologies** 
+    - MEVN STACK
+    - VueJS
+    - NodeJs/Express
+    - MongoDB/mongoose
+    - Mongo-Session
+    - Cloudinary API 
+    - REDIS 
+    
+    
+    
+    
+
 
 ### **To run server in development mode**
 -       See envSample file for enviromental variables
