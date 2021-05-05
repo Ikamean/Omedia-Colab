@@ -8,7 +8,7 @@ const { redisMiddleware } = require('../middlewares/redisMiddleware');
 const { updateCache } = require('../controllers/commons/updateCache');
 
 
-const {  deleteMediaById, getMediaById, updateMedia } = require('../controllers/commons/mediaHandler');
+const {  deleteMediaById, getMediaById, updateMedia, removeTempFile } = require('../controllers/commons/mediaHandler');
 
 // handling Put request
 
@@ -84,6 +84,8 @@ router.put('/edit/:id', redirectLogin, async ( req, res ) => {
         const thumbnailResp = await cloudUploader(thumbnailFullPath);
 
         newThumbnail = thumbnailResp.secure_url;
+
+        await removeTempFile(thumbnailFullPath);
     }
     // If no new thumbnails present, get old thumbnail url from request body object.
     if ( !req.files ) {
