@@ -76,5 +76,7 @@
     - PUT ->>> /api/media/edit/:id
            - BODY
            {
-               title : "new title"
+               title : "new title",
+               thumbnail: "new file/ or previous url"
+               private: boolean
            }
