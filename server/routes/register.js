@@ -27,9 +27,8 @@ router.post('/', async (req,res) => {
         // Checking if userName allready exists
         if(exists){
             console.log(`${name} Allready Exists`);
-            return res.status(409).json({
-                error : `Username or Email allready taken`
-            });
+            return res.status(409).send(
+                 `Username or Email allready taken` );
         }
 
        // adding new user to the database and returning response.
@@ -43,9 +42,8 @@ router.post('/', async (req,res) => {
 
          
         console.log('Password Error');
-        return res.status(409).json({
-            error : 'Password must start with letter and must be min 8 characters long'
-        });
+        return res.status(409).send(
+              'Password must start with letter and must be min 8 characters long' );
         
     } catch (error) {
         console.log(error);
