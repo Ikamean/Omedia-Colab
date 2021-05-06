@@ -9,6 +9,7 @@ const sess = session({
     store: store,
     cookie :{
         sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production' ? true : false,
         httpOnly: true
     }
 });
