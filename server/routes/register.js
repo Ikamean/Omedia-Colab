@@ -43,7 +43,7 @@ router.post('/', async (req,res) => {
 
          
         console.log('Password Error');
-        return res.sendStatus(401).json({
+        return res.status(409).json({
             error : 'Password must start with letter and must be min 8 characters long'
         });
         
