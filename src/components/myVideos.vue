@@ -2,13 +2,13 @@
     <v-card width='100vw' class='ma-0 flex' height="50vh">
         <v-container fluid>
             <v-row justify="center">
-                <v-col cols="auto" v-for="(video, index) in videos"
-                    :key="index">
+                <v-col cols="auto" v-for="video in videos"
+                    :key="video.title">
                     <v-card
                     color="#385F73"
                     dark
-                    v-if='videos'
                     >
+                    <div v-if='video.title'>
                         <v-img
                         :src="video.thumbnail"
                         width="300" height="200"
@@ -38,13 +38,11 @@
                             delete
                             </v-btn>
                         </v-card-actions>
-                    </v-card>
-                    <v-card
-                    color="#385F73"
-                    dark
-                    v-else
-                    >
+                    </div>
+                        
+                    <div v-else>
                         <v-card-title>You don't have videos</v-card-title>
+                    </div>
                     </v-card>
                 </v-col>
             </v-row>

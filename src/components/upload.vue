@@ -141,6 +141,8 @@
 
 <script>
 import MyVideos from '../components/myVideos.vue'
+import router from '../router/index'
+import LoginView from '../components/loginView.vue'
 
   export default {
     name: 'Upload',
@@ -206,10 +208,13 @@ import MyVideos from '../components/myVideos.vue'
         this.uploadFile.mediaFile = this.$refs.file.files[0];
         this.uploadFile.thumbnail = this.$refs.thumbnail.files[0];
       },
+      loginPage(){
+        router.push({ path: '/login', components: LoginView }).catch(()=>{})
+      }
     },
-    mounted(){
-      if(document.cookie){
-        return this.$store.getters.isLoggedIn = true
+    created(){
+      if(!localStorage.getItem('userName')){
+        this.loginPage()
       }
     },
   }

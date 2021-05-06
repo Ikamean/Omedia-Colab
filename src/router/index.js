@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Upload from '../components/upload'
 import Edit from '../components/edit'
 import Delete from '../components/delete'
+import LoginView from '../components/loginView'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/delete/:id',
     name: 'Delete',
     component: Delete
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
   },
 ]
 

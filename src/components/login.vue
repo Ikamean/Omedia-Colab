@@ -241,8 +241,11 @@
 
 <script>
 //import axios from 'axios'
+import router from '../router/index'
 
 export default {
+  name: 'Login',
+
   components: {
 
   },
@@ -330,6 +333,7 @@ export default {
     //logout function which removes userID and userName from local storage
     logout(){
       this.$store.dispatch('logout')
+      router.push({ path: '/' }).catch(()=>{})
     },
     //remove error message
     removeError(){
