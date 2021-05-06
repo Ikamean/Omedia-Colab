@@ -9,6 +9,8 @@ const express = require('express');
 const app = express();
 
 
+
+
 const Register = require('./routes/register');
 const Login = require('./routes/login');
 const Logout = require('./routes/logout');
@@ -46,7 +48,8 @@ app.use('/api/upload', redirectLogin, Upload );
 
 
 app.use(express.static(`${__dirname}/dist`) );
-app.get('*', (req,res) => {
+app.get('*',  (req,res) => {
+
     res.sendFile(`${__dirname}/dist/index.html`);
 })
 

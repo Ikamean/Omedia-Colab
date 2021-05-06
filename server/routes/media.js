@@ -43,7 +43,7 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
         
         
         if(!media){
-            return res.send(404);
+            return res.sendStatus(404);
         }
 
         if( media.author === userName ){
@@ -51,10 +51,10 @@ router.delete('/delete/:id', redirectLogin, async (req,res) => {
 
             myEmitter.emit('updateCache', 'document deleted, create new cache');
 
-            return res.send(200)
+            return res.sendStatus(200)
         }
         
-        res.status(403).send('Oopss, Cant Proceed Request. In order to delete media, you should be author of it.')
+        res.sendStatus(403);
 
     } catch (error) {
         console.log(error);
@@ -88,12 +88,10 @@ router.put('/edit/:id', redirectLogin, async ( req, res ) => {
         await removeTempFile(thumbnailFullPath);
     }
     // If no new thumbnails present, get old thumbnail url from request body object.
-    if ( !req.files ) {
-        newThumbnail = req.body.thumbnail;
-    }
+   
 
     if(!media){
-        return res.status(404).send('Media Not Found');
+        return res.sendStatus(404);
     }
 
     if( media.author === userName ){

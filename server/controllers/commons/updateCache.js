@@ -1,6 +1,7 @@
 
 const { getAllMedia } = require('./mediaHandler');
 const { client } = require('../../Redis/redisConfig');
+const fs = require('fs');
 
 /**
  * 
@@ -19,5 +20,7 @@ const updateCache = async (message) => {
         console.log('Created new cache : =>>>>> ' + message, 'Media Length =>>>' , media.length);
         return media;
 }
+
+
 
 module.exports = { updateCache }

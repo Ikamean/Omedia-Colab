@@ -96,7 +96,7 @@ const updateMedia = async ( mediaId, userId, newTitle, newThumbnail, private ) =
         updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { title : newTitle, thumbnail : newThumbnail, private : private } }, { returnOriginal: false } );
     }
 
-    /*
+    
     // If 2 Params are present update 2 of them
 
      //  Title and Thumbnail
@@ -119,7 +119,24 @@ const updateMedia = async ( mediaId, userId, newTitle, newThumbnail, private ) =
 
     //  if 1 Param is present update only 1
 
-    * */
+    // Title
+
+    if ( hasTitle && !hasThumbnail && !hasPrivate ) {
+        updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { title : newTitle } }, { returnOriginal: false } );
+    }
+
+    // Thumbnail 
+
+    if ( !hasTitle && hasThumbnail && !hasPrivate ) {
+        updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { thumbnail : newThumbnail } }, { returnOriginal: false } );
+    }
+
+    //  Private
+    
+    if ( !hasTitle && !hasThumbnail && hasPrivate ) {
+        updatedMedia = await media.findOneAndUpdate({ _id : mediaId }, { $set : { private : private } }, { returnOriginal: false } );
+    }
+    
     
 
     await editAuthorVideo( author, updatedMedia );   
