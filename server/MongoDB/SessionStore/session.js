@@ -6,7 +6,10 @@ const sess = session({
     resave: false,
     secret: process.env.SESS_SECRET,
     saveUninitialized: false,
-    store: store
+    store: store,
+    cookie :{
+        sameSite: 'strict'
+    }
 });
 
 module.exports = sess;
