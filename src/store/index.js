@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     status: '',
     user: localStorage.getItem('userName'),
+    error: '',
   },
   mutations: {
     auth_request(state){
@@ -16,8 +17,9 @@ export default new Vuex.Store({
       state.status = 'success'
       state.user = user
     },
-    auth_error(state){
+    auth_error(state, error){
       state.status = 'error'
+      state.error = error
     },
     logout(state){
       state.status = ''
@@ -26,6 +28,7 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => state.status,
     user: state => state.user,
+    error: state => state.error
   },
 
   actions: {
@@ -34,17 +37,15 @@ export default new Vuex.Store({
         commit('auth_request')
         fetch("/api/login", requestOptions)
         .then(response => response.json())
-        .then(response => {
-          console.log(response)
-          const user = response.data.userName
+        .then(result => {
+          console.log(result)
+          const user = result.data.userName
           localStorage.setItem('userName', user)
-          console.log(user)
           commit('auth_success', user)
-          resolve(response)
-          console.log(document.cookie)
+          resolve(result)
         })
         .catch(err => {
-          commit('auth_error')
+          commit('auth_error', "Wrong credentials")
           reject(err)
         })
       })

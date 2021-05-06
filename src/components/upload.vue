@@ -187,7 +187,6 @@ import LoginView from '../components/loginView.vue'
         formdata.append("private", this.uploadFile.private);
         formdata.append("mediaFile", VideoInput.files[0], "video");
         formdata.append("thumbnail", ThumbnailInput.files[0], "thumbnail");
-        //formdata.append("thumbnail", this.$refs.thumbnail.files[0], "thumbnail");
 
         console.log(formdata)
 
@@ -202,6 +201,7 @@ import LoginView from '../components/loginView.vue'
           .then(response => response.text())
           .then(result => console.log(result))
           .then(() => (this.uploaded = true))
+          .then(() => location.reload())
           .catch(error => console.log('error', error));
       },
       selectFile(){

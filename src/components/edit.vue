@@ -125,7 +125,8 @@ import Upload from '../components/upload.vue'
           this.dialogEdit = false
       },
       uploadPage(){
-        router.push({ path: '/Upload', components: Upload }).catch(()=>{})
+        router.push({ path: '/Upload', components: Upload })
+        .then(() => location.reload())
       }, 
     },
   }

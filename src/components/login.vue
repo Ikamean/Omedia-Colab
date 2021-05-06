@@ -84,7 +84,7 @@
 
                     <!-- error message -->
                     <v-slide-x-transition>
-                      <div v-if="error">
+                      <div v-if="errorM">
                       <v-card-title class="justify-center text-h4" >
                         <v-chip
                         color="red"
@@ -92,14 +92,14 @@
                         label
                         close
                         @click:close='removeError()' 
-                        > {{error}}</v-chip>
+                        > {{errorM}}</v-chip>
                       </v-card-title>
                     </div>
                     </v-slide-x-transition>
                     <!-- error message -->
                       
                     <!-- login form -->
-                    <v-form @submit.prevent="login()" v-model="validLogin">
+                    <v-form ref="loginform" @submit.prevent="login()" v-model="validLogin">
                       <v-container class="justify-center">
                         <v-row justify="center"
                           align="center" 
@@ -153,91 +153,91 @@
                   <!-- login tab -->
 
                   <!-- registration tab -->
-                    <v-tab-item>
-                      <v-card-title class="justify-center text-h4" v-if="registered" transition="scale-transition">
-                        <v-icon size="70px" color="#84eb36">mdi-checkbox-marked-circle-outline</v-icon>
+                  <v-tab-item>
+                    <v-card-title class="justify-center text-h4" v-if="registered" transition="scale-transition">
+                      <v-icon size="70px" color="#84eb36">mdi-checkbox-marked-circle-outline</v-icon>
+                    </v-card-title>
+
+                    <v-card-title class="justify-center text-h4" v-else transition="scale-transition">
+                      <v-icon x-large color="#1F7087">mdi-account-circle-outline</v-icon>
+                    </v-card-title>
+
+                    <!-- error message -->
+                    <v-slide-x-transition>
+                      <div v-if="errorRegister">
+                      <v-card-title class="justify-center text-h4" >
+                        <v-chip
+                        color="red"
+                        outlined
+                        label
+                        close
+                        @click:close='removeErrorRegister()'
+                        > {{errorRegister}}</v-chip>
                       </v-card-title>
+                    </div>
+                    </v-slide-x-transition>
+                    <!-- error message -->
 
-                      <v-card-title class="justify-center text-h4" v-else transition="scale-transition">
-                        <v-icon x-large color="#1F7087">mdi-account-circle-outline</v-icon>
-                      </v-card-title>
+                    <v-form ref="form" @submit.prevent="register()" v-model="validRegister">
+                        <v-container class="justify-center" v-on:keyup.enter="register">
+                          <v-row justify="center"
+                          align="center" 
+                          dense>
+                            <v-col cols="12">
+                              <v-text-field
+                              v-model="userNameRegister"
+                              :rules="nameRules"
+                              name='userName'
+                              placeholder="Username"
+                              prepend-inner-icon="mdi-account"
+                              outlined
+                              clearable
+                              required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-text-field
+                              v-model="email"
+                              :rules="emailRules"
+                              name='email'
+                              placeholder="Email"
+                              prepend-inner-icon="mdi-email"
+                              outlined
+                              clearable
+                              required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-text-field
+                              v-model="passwordRegister"
+                              :rules="passwordRules"
+                              placeholder="Password"
+                              prepend-inner-icon="mdi-lock"
+                              name='password'
+                              outlined
+                              clearable
+                              required
+                              type="password"
+                              ></v-text-field>
+                            </v-col>
 
-                      <!-- error message -->
-                      <v-slide-x-transition>
-                        <div v-if="errorRegister">
-                        <v-card-title class="justify-center text-h4" >
-                          <v-chip
-                          color="red"
-                          outlined
-                          label
-                          close
-                          @click:close='removeErrorRegister()'
-                          > {{errorRegister}}</v-chip>
-                        </v-card-title>
-                      </div>
-                      </v-slide-x-transition>
-                      <!-- error message -->
+                            <v-divider></v-divider>
 
-                      <v-form ref="form" @submit.prevent="register()" v-model="validRegister">
-                          <v-container class="justify-center" v-on:keyup.enter="register">
-                            <v-row justify="center"
-                            align="center" 
-                            dense>
-                              <v-col cols="12">
-                                <v-text-field
-                                v-model="userNameRegister"
-                                :rules="nameRules"
-                                name='userName'
-                                placeholder="Username"
-                                prepend-inner-icon="mdi-account"
-                                outlined
-                                clearable
-                                required
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12">
-                                <v-text-field
-                                v-model="email"
-                                :rules="emailRules"
-                                name='email'
-                                placeholder="Email"
-                                prepend-inner-icon="mdi-email"
-                                outlined
-                                clearable
-                                required
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12">
-                                <v-text-field
-                                v-model="passwordRegister"
-                                :rules="passwordRules"
-                                placeholder="Password"
-                                prepend-inner-icon="mdi-lock"
-                                name='password'
-                                outlined
-                                clearable
-                                required
-                                type="password"
-                                ></v-text-field>
-                              </v-col>
-
-                              <v-divider></v-divider>
-
-                              <v-col cols="auto">
-                                <v-btn
-                                :disabled="!validRegister"
-                                color="#11583E"
-                                outlined
-                                block
-                                type='submit'
-                                >
-                                  Sign up
-                                </v-btn>
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                      </v-form>
-                    </v-tab-item>
+                            <v-col cols="auto">
+                              <v-btn
+                              :disabled="!validRegister"
+                              color="#11583E"
+                              outlined
+                              block
+                              type='submit'
+                              >
+                                Sign up
+                              </v-btn>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                    </v-form>
+                  </v-tab-item>
                   <!-- registration tab -->
 
                 </v-tabs>
@@ -251,8 +251,6 @@
 
   </div>
 <!-- popup login -->
-
-  
 </template>
 
 <script>
@@ -293,7 +291,8 @@ export default {
 
   computed : {
     isLoggedIn : function(){ return this.$store.getters.isLoggedIn},
-    user : function(){ return this.$store.getters.user}
+    user : function(){ return this.$store.getters.user},
+    errorM : function(){ return this.$store.getters.error}
   },
 
 
@@ -314,9 +313,10 @@ export default {
       this.$store.dispatch('login', requestOptions)
       .then(() => {
         this.success = true;
+        this.resetLogin()
       }) 
       .catch(error => {
-        this.error = error.response.data;
+        console.log(error)
         this.success = false;
       });
     },
@@ -356,13 +356,16 @@ export default {
     },
     //remove error message
     removeError(){
-      this.error = '';
+      this.errorM = '';
     },
     removeErrorRegister(){
       this.errorRegister = '';
     },
     reset () {
       this.$refs.form.reset()
+    },
+    resetLogin () {
+      this.$refs.loginform.reset()
     },
   },
   mounted(){

@@ -9,10 +9,9 @@
                     dark
                     >
                     <div v-if='video.title'>
-                        <v-img
-                        :src="video.thumbnail"
-                        width="300" height="200"
-                        ></v-img>
+                        <video width="300" height="200" controls :poster="video.thumbnail">
+                        <source :src="video.url" type="video/mp4">
+                        </video>
 
                         <div v-if="video.private == true">
                             <v-card-subtitle>{{video.title}}: Private</v-card-subtitle>
