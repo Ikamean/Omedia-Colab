@@ -8,7 +8,8 @@ const sess = session({
     saveUninitialized: false,
     store: store,
     cookie :{
-        sameSite: 'strict'
+        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production' ? true : false
     }
 });
 
