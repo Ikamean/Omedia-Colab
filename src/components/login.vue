@@ -316,7 +316,6 @@ export default {
         this.success = true;
       }) 
       .catch(error => {
-        console.log(error)
         this.error = error.response.data;
         this.success = false;
       });
@@ -338,7 +337,7 @@ export default {
       .then(response => response.text())
       .then(result => {
         if(result !== 'Created'){
-          this.errorRegister = result.error;
+          this.errorRegister = result;
           this.registered = false
         }else{
           this.reset();
@@ -348,7 +347,6 @@ export default {
       .catch(err => {
         this.success = false;
         this.errorRegister = err.response.data;
-        console.log(this.error)
       });
     },
     //logout function which removes userID and userName from local storage
