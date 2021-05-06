@@ -338,7 +338,7 @@ export default {
       .then(response => response.text())
       .then(result => {
         if(result !== 'Created'){
-          this.errorRegister = result;
+          this.errorRegister = result.error;
           this.registered = false
         }else{
           this.reset();
