@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.f64f77667582c6cf0c09b58197902804.js"
+  "/precache-manifest.03a9d50d1d9caddd06094639d214ace7.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "colab_front"});
