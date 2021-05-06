@@ -6,7 +6,7 @@ const store = require('./mongoStore');
 const sess = session({
     name: 'sid',
     resave: false,
-    secret: 'secret',
+    secret: process.env.SESS_SECRET,
     saveUninitialized: false,
     store: store
 });

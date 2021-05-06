@@ -5,6 +5,7 @@ PORT=
 MONGODB_URI=
 MONGO_STORE_URI= 
 MONGO_SES_COLLECTION=
+SESS_SECRET=
 
 // Your  Cloudinary Config Variables //
 
