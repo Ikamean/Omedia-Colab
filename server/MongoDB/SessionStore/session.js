@@ -20,7 +20,7 @@ const sess = session({
     store: store,
     cookie: { 
         maxAge: SESS_LIFETIME,
-        sameSite: 'strict',
+        sameSite: 'none',
         secure: IN_PROD
     }
 });
