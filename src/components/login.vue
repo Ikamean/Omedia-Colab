@@ -162,6 +162,22 @@
                         <v-icon x-large color="#1F7087">mdi-account-circle-outline</v-icon>
                       </v-card-title>
 
+                      <!-- error message -->
+                      <v-slide-x-transition>
+                        <div v-if="errorRegister">
+                        <v-card-title class="justify-center text-h4" >
+                          <v-chip
+                          color="red"
+                          outlined
+                          label
+                          close
+                          @click:close='removeErrorRegister()'
+                          > {{errorRegister}}</v-chip>
+                        </v-card-title>
+                      </div>
+                      </v-slide-x-transition>
+                      <!-- error message -->
+
                       <v-form ref="form" @submit.prevent="register()" v-model="validRegister">
                           <v-container class="justify-center" v-on:keyup.enter="register">
                             <v-row justify="center"
@@ -258,6 +274,7 @@ export default {
     email: '',
     password: '',
     error: '',
+    errorRegister: '',
     userName: '',
     passwordRegister: '',
     userNameRegister: '',
@@ -319,14 +336,18 @@ export default {
       };
       fetch("/api/register", requestOptions)
       .then(response => response.text())
-      .then(result => console.log(result))
-      .then(() => {
-        this.reset();
-        this.registered = true
+      .then(result => {
+        if(result !== 'Created'){
+          this.errorRegister = result;
+          this.registered = false
+        }else{
+          this.reset();
+          this.registered = true
+        }
       })
       .catch(err => {
         this.success = false;
-        this.error = err.response.data;
+        this.errorRegister = err.response.data;
         console.log(this.error)
       });
     },
@@ -338,6 +359,9 @@ export default {
     //remove error message
     removeError(){
       this.error = '';
+    },
+    removeErrorRegister(){
+      this.errorRegister = '';
     },
     reset () {
       this.$refs.form.reset()
