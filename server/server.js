@@ -26,8 +26,9 @@ const redirectHome = require('./middlewares/redirectHome');
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors({
-    origin: '*',
-    optionsSuccessStatus: 200
+    origin: 'https://omedia-colab.herokuapp.com/',
+    optionsSuccessStatus: 200,
+    credentials: true
 }));
 app.use(cookieParser());
 app.use(fileUpload({
