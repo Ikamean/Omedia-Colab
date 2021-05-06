@@ -47,6 +47,14 @@ app.use('/api/user', redirectLogin, User );
 app.use('/api/media', Media );
 app.use('/api/upload', redirectLogin, Upload ); 
 
+app.get('/upload', ( req, res ) => {
+    const userId = req.session.userId;
+
+    if( !userId ){
+        return res.sendStatus(403);
+    }
+})
+
 
 app.use(express.static(`${__dirname}/dist`) );
 app.get('*',  (req,res) => {
