@@ -1,7 +1,7 @@
 
 const { getAllMedia } = require('./mediaHandler');
 const { client } = require('../../Redis/redisConfig');
-const fs = require('fs');
+
 
 /**
  * 
