@@ -18,6 +18,7 @@
           class="mx-4"
           dark
           icon
+          href="https://github.com/Ikamean/Omedia-Colab"
         >
           <v-icon x-large>
             mdi-github

@@ -17,7 +17,7 @@
           elevation="0"
           class='ml-4'
           >
-            <video width="300" height="250" controls>
+            <video width="300" height="250" controls :poster="video.thumbnail">
             <source :src="video.url" type="video/mp4">
             </video>
             <v-card-title>{{video.title}}</v-card-title>
