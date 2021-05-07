@@ -35,7 +35,17 @@
 
 
 ### **Project Overwiev**
-    test
+    Youtube like application, where user can register/login and upload media files (video content).
+
+    All uploaded content are shown on application main page.
+
+    Authorized user is able to delete his/her uploaded media.
+
+    Media can be Public or Private. Private media is only visible to its owner. 
+
+    User can edit media : title | thumbnail | Private/Public visibility.
+
+    
 
 
 ### **Used Technologies** 
