@@ -10,7 +10,7 @@ const sess = session({
     cookie :{
         sameSite: 'strict',
         httpOnly: true,
-        maxAge: 3600 * 60 * 60 * 24
+        
     }
 });
 
