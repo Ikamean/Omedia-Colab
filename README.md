@@ -1,8 +1,9 @@
 # Omedia-Colab 
-
+### ***See Live Project [Omedia-Colab](https://omedia-colab.herokuapp.com/)***
 ### **Project Contributors** :rocket:
 -       Akaki Ivanishvili
 -       Irakli Bidzishvili
+
 
 
 ### **Project Overwiev**
