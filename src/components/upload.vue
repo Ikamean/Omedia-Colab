@@ -3,120 +3,133 @@
     <v-container class="mt-4" fluid>
       <v-row justify="center">
       <!-- Upload form -->
+      
         <v-col cols='auto' no-gutters>
-          <v-card width="80vw">
-            <v-form
-            ref="form"
-            lazy-validation
-            enctype="mutlipart/form-data"
-            @submit.prevent="upload()"
-            >
-              <v-container fluid>
-                <v-row class="justify-center"
-                align="center" 
-                dense
-                no-gutters>
-                  <v-col cols="12">
-                    <v-text-field
-                    v-model="uploadFile.title"
-                    outlined
-                    clearable
-                    :rules="nameRules"
-                    placeholder="Name"
-                    name='title'
-                    required
-                    dense
-                    prepend-icon="mdi-subtitles"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col cols='12'>
-                    <v-file-input
-                      label="Video"
-                      outlined
-                      show-size
-                      dense
-                      id="inputVideo"
-                      name='file'
-                      
-                      v-model="uploadFile.mediaFile"
-                      accept="video/*"
-                      prepend-icon="mdi-video"
-                    ></v-file-input>
-                  </v-col>
-
-                  <v-col cols='12'>
-                    <v-file-input
-                      label="Thumbnail"
-                      outlined
-                      show-size
-                      dense
-                      id="inputThumbnail"
-                      name="thumbnail"
-                      accept="image/*"
-                      prepend-icon="mdi-image"
-                      
-                      v-model="uploadFile.thumbnail"
-                    ></v-file-input>
-                  </v-col>
-
-                  <v-col cols="auto">
-                    <v-radio-group
-                      v-model="uploadFile.private"
-                      row
-                    >
-                      <v-radio
-                        label="Public"
-                        value='false'
-                        name='private'
-                      ></v-radio>
-                      <v-radio
-                        label="Private"
-                        value="true"
-                        name='private'
-                      ></v-radio>
-                    </v-radio-group>
-                  </v-col>
-
-                  <v-col cols="auto">
-                    <v-btn
-                    color="#11583E"
-                    text
-                    type="submit"
-                    >
-                      <v-icon dark x-large>mdi-cloud-upload-outline</v-icon>
-                    </v-btn>
-                  </v-col>
-
-                </v-row> 
-
-              </v-container>
-            </v-form>
-          </v-card>
-
-         <!-- <v-card width="80vw">
-            <v-container>
-              <v-row
-                class="fill-height"
-                align-content="center"
-                justify="center"
-              >
-                <v-col
-                  class="subtitle-1 text-center"
-                  cols="12"
+          <v-dialog
+            v-model="uploaded"
+            width="500"
+            persistent
+          >
+            <template v-slot:activator="{ on, attrs }">
+               <v-card width="80vw">
+                <v-form
+                ref="form"
+                lazy-validation
+                enctype="mutlipart/form-data"
+                @submit.prevent="upload()"
                 >
-                  Uploading your video
-                </v-col>
-                <v-col cols="6">
-                  <v-progress-linear
-                    color="green"
-                    indeterminate
-                  ></v-progress-linear>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card> -->
+                  <v-container fluid>
+                    <v-row class="justify-center"
+                    align="center" 
+                    dense
+                    no-gutters>
+                      <v-col cols="12">
+                        <v-text-field
+                        v-model="uploadFile.title"
+                        outlined
+                        clearable
+                        :rules="nameRules"
+                        placeholder="Name"
+                        name='title'
+                        required
+                        dense
+                        prepend-icon="mdi-subtitles"
+                        ></v-text-field>
+                      </v-col>
 
+                      <v-col cols='12'>
+                        <v-file-input
+                          label="Video"
+                          outlined
+                          show-size
+                          dense
+                          id="inputVideo"
+                          name='file'
+                          
+                          v-model="uploadFile.mediaFile"
+                          accept="video/*"
+                          prepend-icon="mdi-video"
+                        ></v-file-input>
+                      </v-col>
+
+                      <v-col cols='12'>
+                        <v-file-input
+                          label="Thumbnail"
+                          outlined
+                          show-size
+                          dense
+                          id="inputThumbnail"
+                          name="thumbnail"
+                          accept="image/*"
+                          prepend-icon="mdi-image"
+                          
+                          v-model="uploadFile.thumbnail"
+                        ></v-file-input>
+                      </v-col>
+
+                      <v-col cols="auto">
+                        <v-radio-group
+                          v-model="uploadFile.private"
+                          row
+                        >
+                          <v-radio
+                            label="Public"
+                            value='false'
+                            name='private'
+                          ></v-radio>
+                          <v-radio
+                            label="Private"
+                            value="true"
+                            name='private'
+                          ></v-radio>
+                        </v-radio-group>
+                      </v-col>
+
+                      <v-col cols="auto">
+                        <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        color="#11583E"
+                        text
+                        type="submit"
+                        >
+                          <v-icon dark x-large>mdi-cloud-upload-outline</v-icon>
+                        </v-btn>
+                      </v-col>
+                    </v-row> 
+                  </v-container>
+                </v-form>
+              </v-card>
+            </template>
+
+          <!-- Upload loading -->
+            <div>
+              <v-card width="80vw">
+                <v-container>
+                  <v-row
+                    class="fill-height"
+                    align-content="center"
+                    justify="center"
+                  >
+                    <v-col
+                      class="subtitle-1 text-center"
+                      cols="12"
+                    >
+                      Uploading your video
+                    </v-col>
+                    <v-col cols="6">
+                      <v-progress-linear
+                        color="green"
+                        indeterminate
+                      ></v-progress-linear>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card>
+            </div>
+          <!-- Upload loading -->
+
+          </v-dialog>
         </v-col>
       <!-- Upload form -->
 
@@ -154,6 +167,7 @@
 import MyVideos from '../components/myVideos.vue'
 import router from '../router/index'
 import LoginView from '../components/loginView.vue'
+import axios from 'axios'
 
   export default {
     name: 'Upload',
@@ -183,7 +197,9 @@ import LoginView from '../components/loginView.vue'
 
 
     methods: {
+
       upload(){
+        this.uploaded = true
         var formdata = new FormData();
 
         if(this.uploadFile.private == 'true'){
@@ -199,20 +215,22 @@ import LoginView from '../components/loginView.vue'
         formdata.append("mediaFile", VideoInput.files[0], "video");
         formdata.append("thumbnail", ThumbnailInput.files[0], "thumbnail");
 
-        console.log(formdata)
+        var config = {
+        method: 'post',
+        url: '/api/upload',
+        withCredentials: true,
+        data : formdata
+      };
 
-        var requestOptions = {
-          method: 'POST',
-          body: formdata,
-          redirect: 'follow',
-          credentials: 'include',
-        };
-
-        fetch("/api/upload", requestOptions)
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .then(() => location.reload())
-          .catch(error => console.log('error', error));
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .then(() => this.uploaded = false)
+      .then(() => location.reload())
+      .catch(function (error) {
+        console.log(error);
+      });
       },
       selectFile(){
         this.uploadFile.mediaFile = this.$refs.file.files[0];
@@ -221,9 +239,6 @@ import LoginView from '../components/loginView.vue'
       loginPage(){
         router.push({ path: '/login', components: LoginView }).catch(()=>{})
       },
-      uploadLog(){
-        this.uploaded = true
-      }
     },
     created(){
       if(!localStorage.getItem('userName')){
