@@ -12,6 +12,8 @@
         enctype="mutlipart/form-data"
         @submit.prevent="editVid()"
         >
+      <!-- edit form -->
+        <div>
           <v-container fluid>
             <v-row class="justify-center"
             align="center" 
@@ -75,6 +77,8 @@
 
             </v-row>
           </v-container>
+        </div>
+      <!-- edit form -->
         </v-form>
       </v-card>
     </v-dialog>
@@ -84,15 +88,16 @@
 <script>
 import router from '../router/index'
 import Upload from '../components/upload.vue'
+import axios from 'axios'
 
   export default {
     name: 'Edit',
-    props: ['edit'],
     data () {
       return {
         nameRules: [
           v => (v.length <= 50) || 'Name must be less than 50 characters',
         ],
+        edited: false,
         dialogEdit: true,
         editFile: {
             title: '',
@@ -109,17 +114,21 @@ import Upload from '../components/upload.vue'
         formdata.append("private", this.editFile.private);
         formdata.append("thumbnail", ThumbnailInput.files[0], "thumbnail");
 
-        var requestOptions = {
-          method: 'PUT',
-          body: formdata,
-          redirect: 'follow',
-          credentials: 'include',
+        var config = {
+          method: 'put',
+          url: `/api/media/edit/${this.$route.params.id}`,
+          withCredentials: true,
+          data : formdata
         };
 
-        fetch(`/api/media/edit/${this.$route.params.id}`, requestOptions)
-          .then(response => response.json())
-          .then(result => console.log(result))
-          .then(() => this.uploadPage())
+        axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .then(() => this.uploadPage())
+        .catch(function (error) {
+          console.log(error);
+        });
       },
       uploadPage(){
         router.push({ path: '/Upload', components: Upload })
@@ -127,7 +136,6 @@ import Upload from '../components/upload.vue'
       }, 
     },
     created(){
-      console.log(this.$route.params)
       this.editFile.title = this.$route.params.title;
       this.editFile.private = this.$route.params.private;
       this.editFile.thumbnail = this.$route.params.thumbnail;

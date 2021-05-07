@@ -12,6 +12,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
                <v-card width="80vw">
+                 <v-card-title>Upload your video</v-card-title>
                 <v-form
                 ref="form"
                 lazy-validation
