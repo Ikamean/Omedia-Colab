@@ -88,24 +88,35 @@
                     </v-btn>
                   </v-col>
 
-                </v-row>
-
-      <!-- Upload preview -->
-              <template v-if='uploaded'>
-                <v-card
-                  color="#1F7087"
-                  dark
-                >
-                  <v-card-title class="justify-center text-h4" v-if="registered" transition="scale-transition">
-                    <v-icon size="70px" color="#84eb36">mdi-checkbox-marked-circle-outline</v-icon>
-                  </v-card-title>
-                </v-card>
-              </template>
-      <!-- Upload preview -->   
+                </v-row> 
 
               </v-container>
             </v-form>
-          </v-card>  
+          </v-card>
+
+         <!-- <v-card width="80vw">
+            <v-container>
+              <v-row
+                class="fill-height"
+                align-content="center"
+                justify="center"
+              >
+                <v-col
+                  class="subtitle-1 text-center"
+                  cols="12"
+                >
+                  Uploading your video
+                </v-col>
+                <v-col cols="6">
+                  <v-progress-linear
+                    color="green"
+                    indeterminate
+                  ></v-progress-linear>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card> -->
+
         </v-col>
       <!-- Upload form -->
 
@@ -170,9 +181,9 @@ import LoginView from '../components/loginView.vue'
       user : function(){ return this.$store.getters.user}
     },
 
+
     methods: {
       upload(){
-
         var formdata = new FormData();
 
         if(this.uploadFile.private == 'true'){
@@ -200,7 +211,6 @@ import LoginView from '../components/loginView.vue'
         fetch("/api/upload", requestOptions)
           .then(response => response.text())
           .then(result => console.log(result))
-          .then(() => (this.uploaded = true))
           .then(() => location.reload())
           .catch(error => console.log('error', error));
       },
@@ -210,6 +220,9 @@ import LoginView from '../components/loginView.vue'
       },
       loginPage(){
         router.push({ path: '/login', components: LoginView }).catch(()=>{})
+      },
+      uploadLog(){
+        this.uploaded = true
       }
     },
     created(){

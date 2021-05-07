@@ -2,13 +2,18 @@
     <v-card width='100vw' class='ma-0 flex' height="50vh">
         <v-container fluid>
             <v-row justify="center">
+                
+                <div v-if="noVideo">
+                    <h1>You don't have videos</h1>
+                </div>
+
                 <v-col cols="auto" v-for="video in videos"
                     :key="video.title">
                     <v-card
                     color="#385F73"
                     dark
                     >
-                    <div v-if='video.title'>
+                    <div>
                         <video width="300" height="200" controls :poster="video.thumbnail">
                         <source :src="video.url" type="video/mp4">
                         </video>
@@ -38,12 +43,10 @@
                             </v-btn>
                         </v-card-actions>
                     </div>
-                        
-                    <div v-else>
-                        <v-card-title>You don't have videos</v-card-title>
-                    </div>
+                
                     </v-card>
                 </v-col>
+
             </v-row>
         </v-container>
     </v-card>
@@ -62,6 +65,7 @@ export default {
 
     data: ()=>({
         videos:  [],
+        noVideo: false
     }),
     methods: {
         //returns my videos
@@ -77,21 +81,30 @@ export default {
             .then(response => response.json())
             .then(result => {
                 this.videos = result.videos
-                console.log(this.videos)
+                this.check()
             })
             .catch(error => console.log('error', error));
         },
 
         editPage(id){
-            router.push({ path: `/edit/${id}`, components: Edit }).catch(()=>{})
+            router.push({ path: `/edit/${id}`, components: Edit,}).catch(()=>{})
         },
 
         deletePage(id){
             router.push({ path: `/delete/${id}`, components: Delete }).catch(()=>{})
         },
+        check(){
+        if(this.videos.length == 0){
+            this.noVideo = true
+        }else{
+            this.noVideo = false
+            }
+        }
     },
+
     mounted(){
         this.myVideos()
+        
     }
 }
 </script>

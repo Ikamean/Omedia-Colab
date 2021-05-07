@@ -3,6 +3,7 @@
     <v-dialog
       v-model="dialogDelete"
       width="500px"
+      persistent
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn

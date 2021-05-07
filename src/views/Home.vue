@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <v-row justify='center' v-if="videos">
+    <v-row justify='center'>
+      
       <v-col
         v-for="(video, index) in videos"
         :key="index"
@@ -37,27 +38,24 @@
             
           </v-card-text>  
         </v-card>
-
       </v-col>
-    </v-row>
 
-    <v-row justify='center' v-else>
-      <v-col
-        v-for="n in 4"
-        :key="n"
-        cols="12"
+      <v-col cols='12'
         xl="4"
         lg="4"
         md="4"
         sm="6"
-        xs="12"
-      >
+        xs="12" v-for="n in 6" :key=n>
+        <div v-if="noVideo">
         <v-skeleton-loader
-        class="mx-auto"
-        max-width="300"
-        type="card"
-      ></v-skeleton-loader>
+          class="mx-auto"
+          width="300"
+          height="250"
+          type="card"
+          ></v-skeleton-loader>
+        </div>
       </v-col>
+     
     </v-row>
   </v-container>
 </template>
@@ -74,20 +72,29 @@ export default {
 
   data:() => ({
     videos: [],
+    noVideo: false
   }),
   methods: {
     getVideos(){
       getAPI.get('api/media')
       .then(response => {
         this.videos = response.data.data
-        console.log(this.videos)
+        this.check()
       })
       .catch(err => {
         console.log(err)
+        this.check()
       })
-    }
+    },
+    check(){
+      if(this.videos.length == 0){
+          this.noVideo = true
+      }else{
+          this.noVideo = false
+          }
+      }
   },
-  created(){
+  mounted(){
     this.getVideos()
   }
 }

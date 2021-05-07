@@ -19,6 +19,7 @@
           dark
           icon
           href="https://github.com/Ikamean/Omedia-Colab"
+          target="_blank"
         >
           <v-icon x-large>
             mdi-github

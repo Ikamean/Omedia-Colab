@@ -3,6 +3,7 @@
     <v-dialog
       v-model="dialogEdit"
       width="500px"
+      persistent
     >
       <v-card>
         <v-form
@@ -86,9 +87,7 @@ import Upload from '../components/upload.vue'
 
   export default {
     name: 'Edit',
-    props: {
-
-    },
+    props: ['edit'],
     data () {
       return {
         nameRules: [
@@ -121,13 +120,17 @@ import Upload from '../components/upload.vue'
           .then(response => response.json())
           .then(result => console.log(result))
           .then(() => this.uploadPage())
-          .catch(error => console.log('error', error));
-          this.dialogEdit = false
       },
       uploadPage(){
         router.push({ path: '/Upload', components: Upload })
         .then(() => location.reload())
       }, 
     },
+    created(){
+      console.log(this.$route.params)
+      this.editFile.title = this.$route.params.title;
+      this.editFile.private = this.$route.params.private;
+      this.editFile.thumbnail = this.$route.params.thumbnail;
+    }
   }
 </script>

@@ -22,7 +22,7 @@ const routes = [
   {
     path: '/edit/:id',
     name: 'Edit',
-    component: Edit
+    component: Edit,
   },
   {
     path: '/delete/:id',
