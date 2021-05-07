@@ -315,6 +315,10 @@ export default {
     reset () {
       this.$refs.form.reset()
     },
+    home(){
+      router.push({ path: '/' })
+      .then(() => location.reload())
+    },
   },
   mounted(){
     this.email = ''
@@ -324,6 +328,10 @@ export default {
     this.userName = ''
     this.passwordRegister = ''
     this.userNameRegister = ''
+
+    if(localStorage.getItem('userName')){
+      this.home()
+    }
 
     if(document.cookie){
       return this.$store.getters.isLoggedIn = true
