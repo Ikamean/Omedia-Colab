@@ -1,37 +1,8 @@
 # Omedia-Colab 
 
 ### **Project Contributors** :rocket:
-    - Akaki Ivanishvili
-    - Irakli Bidzishvili
-
-
-### To start working 
-    - Fork this Repo 
-        git clone https://github.com/Ikamean/Omedia-Colab.git
-
-    - Go into Project folder 
-        cd Omedia-colab
-
-    - Optional : You can Rename folder for further easy access  
-        mv Omedia-Colab <some simple name> 
-
-    - Create new branch 
-        git checkout -b <Your Branch Name>
-
-    - Make some changes
-
-    - Add changes to your new branch  
-        git add . 
-
-    - Commit changes  
-        git commit -m 'usefull message' 
-
-    - Push your local branch to remote repo 
-        git push origin <Your Branch Name> 
-
-    
-
-
+-       Akaki Ivanishvili
+-       Irakli Bidzishvili
 
 
 ### **Project Overwiev**
@@ -45,21 +16,41 @@
 
     User can edit media : title | thumbnail | Private/Public visibility.
 
-    
-
 
 ### **Used Technologies** 
-    - MEVN STACK
-    - VueJS
-    - NodeJs/Express
-    - MongoDB/mongoose
-    - Mongo-Session
-    - Cloudinary API 
-    - REDIS 
-    
-    
-    
-    
+-       MEVN STACK
+-       VueJS
+-       NodeJs/Express
+-       MongoDB/mongoose
+-       Mongo-Session
+-       Cloudinary API 
+-       REDIS 
+
+
+### To start working 
+-       Fork this Repo 
+        git clone https://github.com/Ikamean/Omedia-Colab.git
+
+-       Go into Project folder 
+        cd Omedia-colab
+
+-       Optional : You can Rename folder for further easy   access  
+        mv Omedia-Colab <some simple name> 
+
+-       Create new branch 
+        git checkout -b <Your Branch Name>
+
+-       Make some changes
+
+-       Add changes to your new branch  
+        git add . 
+
+-       Commit changes  
+        git commit -m 'usefull message' 
+
+-       Push your local branch to remote repo 
+        git push origin <Your Branch Name> 
+
 
 
 ### **To run server in development mode**
@@ -69,34 +60,48 @@
 -       npm run dev
 
 
+### Client side scripts
+
+    Install Dependencies
+-      npm install
+
+    Development Mode
+-        npm run serve
+    Production Build
+-        npm run build
+    Linting
+-       npm run lint
 ### ***API Routes***
-    REQUEST METHOD ->>> PATH
+        REQUEST METHOD ->>> PATH
 #### AUTH
     
-    - POST ->>>  /api/register 
-        - BODY 
+-       POST ->>>  /api/register 
+        
+        BODY 
             { 
                 userName : String,
                 password : String
             }
 
-    - POST ->>> /api/login
-        - BODY 
+-       POST ->>> /api/login
+        
+        BODY 
             { 
                 userName : String,
                 password : String
             }
 
-    - POST ->>> /api/logout
+-       POST ->>> /api/logout
 
 #### USER PROFILE
-    - GET ->>> /api/user/me
+-       GET ->>> /api/user/me
 
 #### MEDIA 
-    - GET ->>> /api/media
+-       GET ->>> /api/media
 
-    - POST ->>> /api/upload
-            - BODY 
+-       POST ->>> /api/upload
+        
+        BODY 
             {
                 title : String,
                 mediaFile : Binary,
@@ -104,12 +109,14 @@
                 private : Boolean
             }
             
-    - DELETE ->>> /api/media/delete/:id
+-       DELETE ->>> /api/media/delete/:id
 
-    - PUT ->>> /api/media/edit/:id
-           - BODY
+-       PUT ->>> /api/media/edit/:id
+        
+        BODY
            {
                title : "new title",
                thumbnail: "new file/ or previous url"
                private: boolean
            }
+
