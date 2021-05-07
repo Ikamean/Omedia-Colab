@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Omedia-Colab 
 ### ***See Live Project [Omedia-Colab](https://omedia-colab.herokuapp.com/)***
 ### **Project Contributors** :rocket:
@@ -122,29 +121,3 @@
                private: boolean
            }
 
-=======
-# colab_front
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
->>>>>>> 35793896ec209e7722b0f20d0131f6648278d953
