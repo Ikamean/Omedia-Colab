@@ -9,8 +9,7 @@ const sess = session({
     store: store,
     cookie :{
         sameSite: 'strict',
-        httpOnly: true,
-        maxAge: 3600 * 24
+        httpOnly: true, 
     }
 });
 
