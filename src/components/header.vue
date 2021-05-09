@@ -7,7 +7,7 @@
     flat>
     <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
        
-      <!-- search bar -->
+      <!-- search bar
       <v-text-field
           outlined
           placeholder="Search"
@@ -17,7 +17,7 @@
           class="expanding-search"
           style="padding-top: 25px; margin-left: 10vw;"
       ></v-text-field>
-      <!-- search bar -->
+          search bar -->
       
       <v-spacer></v-spacer>
       <Login />
