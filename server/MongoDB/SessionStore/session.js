@@ -9,7 +9,9 @@ const sess = session({
     store: store,
     cookie :{
         sameSite: 'strict',
-        httpOnly: true,
+        httpOnly: true, 
+
+        
         
     }
 });
