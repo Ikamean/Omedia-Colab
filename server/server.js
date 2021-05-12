@@ -3,6 +3,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const session = require('./MongoDB/SessionStore/session');
+const morgan = require('morgan');
+const config = require('config');
 
 
 const express = require('express');
@@ -47,6 +49,10 @@ app.use('/api/media', Media );
 app.use('/api/upload', redirectLogin, Upload ); 
 
 
+if(config.util.getEnv('NODE_ENV') !== 'test') {
+    //use morgan to log at command line
+    app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
+}
 
 
 app.use(express.static(`${__dirname}/dist`) );

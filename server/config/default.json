@@ -1,0 +1,8 @@
+{ 
+    "dev": {
+        "collection" : "colabApp?retryWrites=true&w=majority"
+    },
+    "chai": {
+        "collection" : "chai?retryWrites=true&w=majority"
+    }
+}
