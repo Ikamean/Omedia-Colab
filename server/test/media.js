@@ -42,6 +42,8 @@ describe('Media', () => {
     
   });
 
+   // 401 unauthorized requests
+
   describe('POST /api/upload', () => {
 
     it('/api/upload =>> it should not POST a Media without unauthorized session id', (done) => {
@@ -61,20 +63,47 @@ describe('Media', () => {
     });
   });
 
-  
-  describe('DELETE /api/media/delete/:id', (done) => {
+  //TODO should fix this, returning 404 instead of 401
 
-    it('/api/delete/:id =>> it should response with 404 if no media found by requested ID', (done) => {
-        let mediaId = "404";
+   // 401 unauthorized requests
+  
+  describe('DELETE /api/media/delete/:id', () => {
+
+    it('/api/media/delete/:id =>> it should response with 401 if no media found by requested ID', (done) => {
+        let mediaId = "401";
 
         chai.request(server)
         .delete('/api/media/delete' + mediaId)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
 
           done();
         });
     })
   })
+
+  // 401 unauthorized requests
+
+  describe('PUT /api/media/edit/:id', () => {
+
+    it('/api/media/edit/:id =>> it should response with 401, unauthorized Request', (done) => {
+      let mediaId = "401";
+
+      const updatedMedia = {
+        title: "newTitle"
+      }
+
+      chai.request(server)
+      .put('/api/media/edit/' + mediaId)
+      .send(updatedMedia)
+      .end(( err, res )=> {
+        res.should.have.status(401)
+
+        done();
+      })
+
+    })
+  })
+
 
 });
