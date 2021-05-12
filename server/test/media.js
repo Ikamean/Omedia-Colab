@@ -21,10 +21,10 @@ describe('Media', () => {
         });
     });
 /*
-  * Test the /GET route
+  * Test the /api/media route
   */
-  describe('/GET Media', () => {
-      it('it should GET all the Media', (done) => {
+  describe('GET /api/media', () => {
+      it('/api/media = >>> it should GET all the Media', (done) => {
         chai.request(server)
             .get('/api/media')
             .end((err, res) => {
@@ -34,6 +34,47 @@ describe('Media', () => {
               done();
             });
       });
+
+    //TODO // send authenticated POST request to api/upload
+
+    
+
+    
   });
+
+  describe('POST /api/upload', () => {
+
+    it('/api/upload =>> it should not POST a Media without unauthorized session id', (done) => {
+      let media = {
+          title: "The Lord of the Rings",
+          mediaFile: "video.mp4",
+          private: false
+      }
+        chai.request(server)
+        .post('/api/upload')
+        .send(media)
+        .end((err, res) => {
+              res.should.have.status(401);
+             
+          done();
+        });
+    });
+  });
+
+  
+  describe('DELETE /api/media/delete/:id', (done) => {
+
+    it('/api/delete/:id =>> it should response with 404 if no media found by requested ID', (done) => {
+        let mediaId = "404";
+
+        chai.request(server)
+        .delete('/api/media/delete' + mediaId)
+        .end((err, res) => {
+          res.should.have.status(404);
+
+          done();
+        });
+    })
+  })
 
 });
