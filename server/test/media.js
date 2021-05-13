@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 
 process.env.NODE_ENV = 'test';
 
@@ -16,7 +17,7 @@ let should = chai.should();
 chai.use(chaiHttp);
 //Our parent block
 describe('Media', () => {
-    beforeEach( async () => { //Before each test we empty the database
+    before( async () => { //Before each test we empty the database
         await Media.deleteMany({});
         await Users.deleteMany({});
     });
@@ -83,9 +84,16 @@ describe('Media', () => {
 
   });
 
+  // TODO Read media file and sent TEST with post request
+  const readMedia =   () => {
+    console.log(fs.readFileSync('./files/dota.mp4'));
+  }
 
-  describe(' Make Authorized Requests for Media Manipulation ', () => {
+  
 
+  describe(' Make Authorized Requests for Media Manipulation ',   () => {
+
+    
     const newUser = {
       userName : 'ikamean',
       email : 'ikamean@gmail.com',
@@ -99,7 +107,8 @@ describe('Media', () => {
 
     const media = {
       title : 'newMedia',
-      mediaFile : 'media.mp4',
+      mediaFile : '' ,
+      thumbnail : '',
       private : false
     }
 
@@ -113,12 +122,16 @@ describe('Media', () => {
 
       console.log('Register Resp status', regResp.status);
 
-      sid = 's%3A3g5W9ix2JS_KPEzIJXHJjB6B5ALcdUV7.3H%2B16O7vS%2BbgPufo354o8tw6oPAUcMVCti1s3WFWIFg'
+      
+
+     
 
       const loginResp = await chai.request(server)
                               .post('/api/login')
                               .send(user)
       console.log('Login Resp status', loginResp.status);
+
+      sid = JSON.stringify(loginResp.headers['set-cookie']).split('=')[1].split(' ')[0].split(';')[0];
       
     });
 
@@ -131,7 +144,27 @@ describe('Media', () => {
       .send(media)
 
       console.log('/api/upload response status', res.status);
+
+      
      
+    })
+
+    it('DELETE /api/media/delete/:id', async () => {
+      const res = await chai.request(server)
+      .delete('/api/media/delete/','404')
+
+      console.log('DELETE response status', res.status);
+      res.should.have.status(404)
+
+    })
+
+    it('PUT /api/media/edit/:id', async () => {
+      const res = await chai.request(server)
+      .put('/api/media/edit/','404')
+      .send('Wrong ID');
+
+      console.log('PUT response status', res.status);
+      res.should.have.status(404)
     })
 
   })
