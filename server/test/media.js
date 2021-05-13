@@ -63,7 +63,7 @@ describe('Media', () => {
     });
   });
 
-  //TODO should fix this, returning 404 instead of 401
+ 
 
    // 401 unauthorized requests
   
@@ -73,9 +73,14 @@ describe('Media', () => {
         let mediaId = "401";
 
         chai.request(server)
-        .delete('/api/media/delete' + mediaId)
+        .delete('/api/media/delete/' + mediaId)
         .end((err, res) => {
+
+          
+
           res.should.have.status(401);
+
+          
 
           done();
         });
